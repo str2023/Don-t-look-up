@@ -3,31 +3,25 @@
 import React, { useReducer, useEffect, useState } from 'react';
 import { createContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/common/Header';
-import { IntroPage, LoginPage, RegisterPage, MainPage } from './pages';
 import { handlers as Api } from './mocks/mocks';
+import loginReducer from './store/reducer/loginReducer';
+
+import Header from './components/common/Header';
+// import { IntroPage, LoginPage, RegisterPage, MainPage } from './pages';
+import LoginForm from './components/user/LoginForm';
+import RegisterForm from './components/user/RegisterForm';
+import Main from './components/main/Main';
+import Intro from './components/intro/Intro';
+import User from './components/user/User';
+
 
 export const UserStateContext = createContext();
 export const DispatchContext = createContext();
 
-const loginReducer = (state, action) => {
-  switch (action.type) {
-    case 'LOGIN_SUCCESS':
-      return {
-        user: action.payload,
-      };
-    case 'LOGOUT':
-      return {
-        user: null,
-      };
-    default:
-      return state;
-  }
-};
-
 function App() {
   const [userState, dispatch] = useReducer(loginReducer, {
     user: null,
+    isLoggedIn: false,
   });
 
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
@@ -63,10 +57,11 @@ function App() {
         <DispatchContext.Provider value={dispatch}>
           <Header />
           <Routes>
-            <Route path="/" element={<IntroPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/main" element={<MainPage />} />
+            <Route path="/" element={<Intro />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/register" element={<RegisterForm />} />
+            <Route path="/main" element={<Main />} />
+            <Route path="/user" element={<User />} />
           </Routes>
         </DispatchContext.Provider>
       </UserStateContext.Provider>
