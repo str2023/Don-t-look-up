@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import * as Api from '../../lib/apis/api';
+import Post from '../postSearch/PostSearch';
 
 function Main() {
   const [temperature, setTemperature] = useState('');
   const [UV, setUV] = useState(null);
   const [attire, setAttire] = useState(null);
   const [area, setArea] = useState('');
+
+  const [popup, setPopup] = useState(false);
+
+  const handleInput = (e) => {
+    setArea(e.target.value);
+  };
+
+  const handleComplete = (data) => {
+    setPopup(!popup);
+  };
 
   useEffect(() => {
     const getAttire = () => {
@@ -54,18 +65,22 @@ function Main() {
     }
   };
 
-  const handleAreaChange = (e) => {
-    setArea(e.target.value);
-  };
-
-  const getWeatherInfo = () => {
+  const getWeather = () => {
     getTemperature();
     getUV();
   };
   return (
     <div>
-      <input type="text" value={area} onChange={handleAreaChange} placeholder="위치를 입력해주세요" />
-      <button onClick={getWeatherInfo}>날씨 정보 찾기</button>
+      <div className="address_search">
+        <input className="user_enroll_text" placeholder="주소" type="text" required name="address" onChange={handleInput} value={area} />
+        <button type="button" onClick={handleComplete}>
+          주소 찾기
+        </button>
+        <button type="button" onClick={getWeather}>
+          날씨 정보 찾기
+        </button>
+        {popup && <Post setArea={setArea} />}
+      </div>
       <p>{temperature ? `현재 위치의 날씨 정보는 ${temperature}입니다` : ''}</p>
       <p>{UV ? `현재 위치의 자외선 수치는 ${UV}입니다` : ''}</p>
       {attire && (
