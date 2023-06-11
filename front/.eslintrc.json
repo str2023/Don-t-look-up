@@ -18,6 +18,7 @@
     "no-console": "off", //console.log warning 제거
     "no-unused-vars": ["error", { "args": "none" }], //사용되지 않는 매개변수 에러 제거
     "react/function-component-definition": [2, { "namedComponents": ["arrow-function", "function-declaration"] }],
-    "import/no-cycle": "off"
+    "import/no-cycle": "off",
+    "react/prop-types": "off"
   }
 }
