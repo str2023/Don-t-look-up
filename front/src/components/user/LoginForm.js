@@ -89,7 +89,7 @@ function LoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 error={!isPasswordValid}
-                helperText={!isPasswordValid ? "비밀번호는 4글자 이상입니다." : ""}
+                helperText={!isPasswordValid ? "비밀번호는 6글자 이상입니다." : ""}
                 margin="normal"
                 variant="outlined"
                 />
@@ -106,7 +106,7 @@ function LoginForm() {
                 <Grid container justifyContent="center" mt={3}>
                 <Button
                     variant="outlined"
-                    onClick={() => navigate("/user/register")}
+                    onClick={() => navigate("/register")}
                 >
                     회원가입
                 </Button>

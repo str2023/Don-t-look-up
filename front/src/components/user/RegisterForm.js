@@ -87,7 +87,7 @@ function RegisterForm() {
             throw new Error("Response from API is undefined");
         }
 
-const user = res.data;
+        const user = res.data;
 
         const jwtToken = user.token;
         sessionStorage.setItem("userToken", jwtToken);
@@ -99,12 +99,7 @@ const user = res.data;
 
         navigate("/login", { replace: true });
         } catch (err) {
-        Swal.fire({
-            icon: "error",
-            title: err.message,
-            showConfirmButton: false,
-            timer: 1000,
-        });
+            console.log(err);
         }
     };
 
@@ -224,11 +219,11 @@ const user = res.data;
                     <Button
                     variant="contained"
                     color="success"
-                    type="submit"
+                    onClick={() => navigate("/login")}
                     sx={{ fontFamily: "GmarketSans" }}
                     disabled={!isFormValid}
                     >
-                    회원가입
+                    회원가입하기
                     </Button>
                 </Grid>
                 <Grid item>
@@ -238,7 +233,7 @@ const user = res.data;
                     color="success"
                     onClick={() => navigate("/login")}
                     >
-                    로그인하기
+                    로그인화면으로 돌아가기
                     </Button>
                 </Grid>
                 </Grid>
