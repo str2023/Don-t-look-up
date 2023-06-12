@@ -4,15 +4,13 @@ import { Box, Container, Grid, TextField, Button, Typography } from '@mui/materi
 
 import * as Api from '../../lib/apis/api';
 
-// import { handlers } from '../../mocks/mocks';
-import { DispatchContext, UserStateContext } from '../../App';
-
 import logoPurple from '../../assets/Logo_purple.png';
+import { UserContext } from '../../contexts/context';
 
 function LoginForm() {
-  const { isLoggedIn } = useContext(UserStateContext);
+  const { userState, dispatch } = useContext(UserContext);
+  const { isLoggedIn } = userState;
   const navigate = useNavigate();
-  const dispatch = useContext(DispatchContext);
 
   useEffect(() => {
     if (isLoggedIn) {
