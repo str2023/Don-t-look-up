@@ -12,6 +12,7 @@ import RegisterForm from './components/user/RegisterForm';
 import Main from './components/main/Main';
 import Intro from './components/intro/Intro';
 import User from './components/user/User';
+import Favorite from './components/favorite/Favorite';
 
 export const UserStateContext = createContext();
 export const DispatchContext = createContext();
@@ -60,6 +61,7 @@ function App() {
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/main" element={<Main />} />
             <Route path="/user" element={<User />} />
+            <Route path="/favorite" element={<Favorite />} />
           </Routes>
         </DispatchContext.Provider>
       </UserStateContext.Provider>
