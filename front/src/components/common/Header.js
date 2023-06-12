@@ -1,6 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable no-unused-vars */
 import React, { useContext } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { AppBar, Toolbar, Button, Typography } from '@mui/material';
@@ -71,9 +68,11 @@ const Header = () => {
             로그아웃
           </Button>
         )}
-        <Button color="inherit" onClick={handleRegister}>
-          회원가입
-        </Button>
+        {!userState.isLoggedIn && (
+          <Button color="inherit" onClick={handleRegister}>
+            회원가입
+          </Button>
+        )}
       </Toolbar>
     </AppBar>
   );
