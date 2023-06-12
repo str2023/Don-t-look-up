@@ -10,7 +10,7 @@ function Favorite() {
     useEffect(() => {
         const fetchFavorites = async () => {
         try {
-            const response = await Api.get('/user/favorite');
+            const response = await Api.get('/favorite');
             setFavorites(response.data);
         } catch (error) {
             console.error('There was an error!', error);
