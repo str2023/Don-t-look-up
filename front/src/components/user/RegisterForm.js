@@ -6,18 +6,15 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Container, Grid, TextField, Button, Typography } from '@mui/material';
 import { FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@material-ui/core';
-import { Swal } from 'sweetalert2';
 
 import * as Api from '../../lib/apis/api';
 
-// import { handlers } from '../../mocks/mocks';
-import { DispatchContext, UserStateContext } from '../../App';
-
 import logoPurple from '../../assets/Logo_purple.png';
+import { UserContext } from '../../contexts/context';
 
 function RegisterForm() {
-  const { isLoggedIn } = useContext(UserStateContext);
-  const dispatch = useContext(DispatchContext);
+  const { userState, dispatch } = useContext(UserContext);
+  const { isLoggedIn } = userState;
 
   const navigate = useNavigate();
 

@@ -9,13 +9,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
-import { UserStateContext, DispatchContext } from '../../App';
 import logoWhite from '../../assets/Logo_white.png';
+import { UserContext } from '../../contexts/context';
 
 const Header = () => {
   const navigate = useNavigate();
-  const userState = useContext(UserStateContext);
-  const dispatch = useContext(DispatchContext);
+  const { userState, dispatch } = useContext(UserContext);
   const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
 
   const handleMenuClick = (event) => {

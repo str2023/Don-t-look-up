@@ -20,6 +20,7 @@
     "react/function-component-definition": [2, { "namedComponents": ["arrow-function", "function-declaration"] }],
     "import/no-cycle": "off",
     "react/prop-types": "off",
-    "react/button-has-type": "warn"
+    "react/button-has-type": "warn",
+    "react/destructuring-assignment": "off"
   }
 }

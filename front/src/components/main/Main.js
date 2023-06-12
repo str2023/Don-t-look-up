@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Api from '../../lib/apis/api';
-import { UserStateContext } from '../../App';
+import { UserContext } from '../../contexts/context';
 
 function Main() {
   const [temperature, setTemperature] = useState('');
@@ -9,7 +9,7 @@ function Main() {
   const [attire, setAttire] = useState(null);
   const [area, setArea] = useState('');
   const navigate = useNavigate();
-  const { isLoggedIn } = useContext(UserStateContext);
+  const { isLoggedIn } = useContext(UserContext).userState;
 
   useEffect(() => {
     if (!isLoggedIn) {
