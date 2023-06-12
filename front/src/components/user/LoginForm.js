@@ -104,7 +104,7 @@ function LoginForm() {
                 </Button>
                 </Grid>
                 <Grid container justifyContent="center" mt={3}>
-                <Button variant="outlined" onClick={() => navigate('/user/register')}>
+                <Button variant="outlined" onClick={() => navigate('/register')}>
                     회원가입
                 </Button>
                 </Grid>
