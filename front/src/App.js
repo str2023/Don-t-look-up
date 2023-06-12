@@ -1,9 +1,8 @@
 // import logo from './logo.svg';
 // import './App.css';
-import React, { useReducer, useEffect, useState } from 'react';
-import { createContext } from 'react';
+import React, { createContext, useReducer, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { handlers as Api } from './mocks/mocks';
+import * as Api from './lib/apis/api';
 import loginReducer from './store/reducer/loginReducer';
 
 import Header from './components/common/Header';
@@ -13,7 +12,6 @@ import RegisterForm from './components/user/RegisterForm';
 import Main from './components/main/Main';
 import Intro from './components/intro/Intro';
 import User from './components/user/User';
-
 
 export const UserStateContext = createContext();
 export const DispatchContext = createContext();
