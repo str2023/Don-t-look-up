@@ -22,11 +22,15 @@ function Main() {
       if (temperature !== null) {
         // 아래에 위치를 입력해서 가져온 temperature로 /outfit 입력해서 옷 정보를 가져온다
         Api.get('/outfit', { temp: temperature })
-          .then((response) => {
-            if (response.data && response.data.clothes && response.data.clothes.length > 0) {
-              setAttire(response.data.clothes[0]);
-            } else {
-              console.error('Unexpected API response', response);
+          .then((data) => {
+            try {
+              if (data && data.clothes && data.clothes.length > 0) {
+                setAttire(data.clothes[0]);
+              } else {
+                console.error('Unexpected API ');
+              }
+            } catch (e) {
+              console.error('There was an error!', e);
             }
           })
           .catch((error) => {
