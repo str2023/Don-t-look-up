@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Container, Grid, TextField, Button, Typography } from '@mui/material';
@@ -95,7 +94,7 @@ function LoginForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               error={!isPasswordValid}
-              helperText={!isPasswordValid ? '비밀번호는 4글자 이상입니다.' : ''}
+              helperText={!isPasswordValid ? '비밀번호는 6글자 이상입니다.' : ''}
               margin="normal"
               variant="outlined"
             />

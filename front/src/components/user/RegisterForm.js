@@ -111,12 +111,7 @@ function RegisterForm() {
 
       navigate('/login', { replace: true });
     } catch (err) {
-      Swal.fire({
-        icon: 'error',
-        title: err.message,
-        showConfirmButton: false,
-        timer: 1000,
-      });
+      console.log(err);
     }
   };
 

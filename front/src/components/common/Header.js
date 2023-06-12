@@ -2,7 +2,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-unused-vars */
 import React, { useContext } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { AppBar, Toolbar, Button, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -10,6 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import { UserStateContext, DispatchContext } from '../../App';
+import logoWhite from '../../assets/Logo_white.png';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -52,13 +53,15 @@ const Header = () => {
         </IconButton>
         <Menu anchorEl={menuAnchorEl} open={Boolean(menuAnchorEl)} onClose={handleMenuClose} keepMounted>
           {/* Add your menu items here */}
-          <MenuItem onClick={handleMenuClose}>Menu Item 1</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Menu Item 2</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Menu Item 3</MenuItem>
+          <MenuItem onClick={() => navigate('/main')}>메인페이지</MenuItem>
+          <MenuItem onClick={() => navigate('/user')}>마이페이지</MenuItem>
+          <MenuItem onClick={() => navigate('/favorite')}>즐겨찾기</MenuItem>
         </Menu>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Don't Look Up
-        </Typography>
+        <div style={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+          <Link to="/">
+            <img src={logoWhite} alt="logo white" style={{ height: '4rem' }} />
+          </Link>
+        </div>
         {!userState.isLoggedIn && (
           <Button color="inherit" onClick={handleLogin}>
             로그인
