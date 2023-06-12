@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Container, Grid, TextField, Button, Typography } from '@mui/material';
 import { FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@material-ui/core';
@@ -11,14 +11,21 @@ import { Swal } from 'sweetalert2';
 import * as Api from '../../lib/apis/api';
 
 // import { handlers } from '../../mocks/mocks';
-import { DispatchContext } from '../../App';
+import { DispatchContext, UserStateContext } from '../../App';
 
 import logoPurple from '../../assets/Logo_purple.png';
 
 function RegisterForm() {
+  const { isLoggedIn } = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn, navigate]);
 
   const registerWithKakao = () => {
     const kakaoKey = process.env.CLIENT_ID;
