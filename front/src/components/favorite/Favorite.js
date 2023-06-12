@@ -8,9 +8,9 @@ function Favorite() {
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        const response = await Api.get('/user/favorite');
+        const favoriteData = await Api.get('/user/favorite');
         setFavorites(() => {
-          const newFavorites = [...response.data];
+          const newFavorites = [...favoriteData];
           return newFavorites;
         });
       } catch (error) {
@@ -26,15 +26,15 @@ function Favorite() {
       try {
         const details = await Promise.all(
           favorites.map(async (favorite) => {
-            const temperatureResponse = await Api.get('/ultraSrtNcst', { area: favorite });
-            const uvResponse = await Api.get('/uvidx', { area: favorite });
-            const outfitResponse = await Api.get('/outfit', { temp: temperatureResponse.data.Current.T1H });
+            const temperatureData = await Api.get('/ultraSrtNcst', { area: favorite });
+            const uvData = await Api.get('/uvidx', { area: favorite });
+            const outfitData = await Api.get('/outfit', { temp: temperatureData.Current.T1H });
 
             return {
               area: favorite,
-              temperature: temperatureResponse.data.Current.T1H,
-              uv: uvResponse.data.h0,
-              outfit: outfitResponse.data.clothes[0],
+              temperature: temperatureData.Current.T1H,
+              uv: uvData.h0,
+              outfit: outfitData.clothes[0],
             };
           }),
         );
@@ -52,8 +52,8 @@ function Favorite() {
 
   return (
     <div>
-      {favoriteDetails.map((detail, index) => (
-        <div key={index}>
+      {favoriteDetails.map((detail) => (
+        <div key={detail.area}>
           <h3>{detail.area}</h3>
           <p>기온: {detail.temperature}</p>
           <p>자외선 수치: {detail.uv}</p>
