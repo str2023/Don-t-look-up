@@ -10,7 +10,7 @@ const ContextProvider = (props) => {
     user: null,
     isLoggedIn: false,
   });
-
+  const [area, setArea] = useState('서울시');
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
   const fetchCurrentUser = async () => {
@@ -39,7 +39,7 @@ const ContextProvider = (props) => {
   }
 
   // eslint-disable-next-line react/destructuring-assignment
-  return <UserContext.Provider value={{ userState, dispatch }}>{props.children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ userState, dispatch, area, setArea }}>{props.children}</UserContext.Provider>;
 };
 
 export default ContextProvider;

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { AppBar, Toolbar, Button, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -8,11 +8,13 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import logoWhite from '../../assets/Logo_white.png';
 import { UserContext } from '../../contexts/context';
+import PostSearchDrawer from '../postSearch/PostSearch';
+import CurrentPostButton from '../postSearch/CurrentPostButton';
 
 const Header = () => {
   const navigate = useNavigate();
   const { userState, dispatch } = useContext(UserContext);
-  const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
 
   const handleMenuClick = (event) => {
     setMenuAnchorEl(event.currentTarget);
@@ -58,6 +60,8 @@ const Header = () => {
             <img src={logoWhite} alt="logo white" style={{ height: '4rem' }} />
           </Link>
         </div>
+        <CurrentPostButton />
+        <PostSearchDrawer />
         {!userState.isLoggedIn && (
           <Button color="inherit" onClick={handleLogin}>
             로그인
