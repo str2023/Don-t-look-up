@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Api from '../../lib/apis/api';
 import { UserContext } from '../../contexts/context';
+import Outfit from '../outfit/Outfits';
 
 function Main() {
   const [temperature, setTemperature] = useState('');
@@ -17,37 +18,12 @@ function Main() {
     }
   }, [isLoggedIn, navigate]);
 
-  useEffect(() => {
-    const getAttire = () => {
-      if (temperature !== null) {
-        // 아래에 위치를 입력해서 가져온 temperature로 /outfit 입력해서 옷 정보를 가져온다
-        Api.get('/outfit', { temp: temperature })
-          .then((data) => {
-            try {
-              if (data && data.clothes && data.clothes.length > 0) {
-                setAttire(data.clothes[0]);
-              } else {
-                console.error('Unexpected API ');
-              }
-            } catch (e) {
-              console.error('There was an error!', e);
-            }
-          })
-          .catch((error) => {
-            console.error('There was an error!', error);
-          });
-      }
-    };
-
-    getAttire();
-  }, [temperature]); // 온도가 변경 될 시 getAttire()를 다시 실행
-
   const getTemperature = () => {
     if (area !== '') {
       // UltraSrtNcst는 현재 위치의 기온을 호출한다
       Api.get('/ultraSrtNcst', { area })
         .then((response) => {
-          setTemperature(response.data.Current.T1H); // Current.T1H는 현재 기온을 뜻한다
+          setTemperature(response.Current.T1H); // Current.T1H는 현재 기온을 뜻한다
         })
         .catch((error) => {
           console.error('There was an error!', error);
@@ -88,18 +64,15 @@ function Main() {
   return (
     <div>
       <input type="text" value={area} onChange={handleAreaChange} placeholder="위치를 입력해주세요" />
-      <button onClick={getWeatherInfo}>날씨 정보 찾기</button>
-      <button onClick={handleFavoriteClick}>즐겨찾기에 추가</button>
-      <p>{temperature ? `현재 위치의 날씨 정보는 ${temperature}입니다` : ''}</p>
+      <button type="button" onClick={getWeatherInfo}>
+        날씨 정보 찾기
+      </button>
+      <button type="button" onClick={handleFavoriteClick}>
+        즐겨찾기에 추가
+      </button>
+      <p>{temperature ? `${area}의 날씨 정보는 ${temperature}입니다` : ''}</p>
       <p>{UV ? `현재 위치의 자외선 수치는 ${UV}입니다` : ''}</p>
-      {attire && (
-        <>
-          <p>Top: {attire.top.join(', ')}</p>
-          <p>Bottom: {attire.bottom.join(', ')}</p>
-          <p>Shoes: {attire.shoes.join(', ')}</p>
-          <p>Outer: {attire.outer || 'None'}</p>
-        </>
-      )}
+      <Outfit temperature={temperature} />
     </div>
   );
 }
