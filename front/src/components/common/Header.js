@@ -31,7 +31,7 @@ const Header = () => {
 
   const handleLogout = () => {
     // 로그아웃 클릭했을시 IntroPage 안내
-    sessionStorage.removeItem(' userToken ');
+    sessionStorage.removeItem('userToken');
 
     dispatch({ type: 'LOGOUT' });
 
