@@ -3,35 +3,27 @@ import * as Api from '../apis/api';
 async function ArrangeWeather({ area }) {
   let weather = {};
   let icon = '';
-  let weatherInfo;
-  let uvIndex;
-  let wthrInfo;
-  let weatherFcst;
   let sky;
+  let outfit;
 
-  try {
-    weatherInfo = await Api.get('/ultraSrtNcst', { area });
-    uvIndex = await Api.get('/uvidx', { area });
-    wthrInfo = await Api.get('/wthrInfo', { area });
-    weatherFcst = await Api.get('/ultraSrtFcst', { area });
-    sky = weatherFcst.forecast[0].SKY;
-  } catch (err) {
-    console.log(err);
-  }
+  const [weatherInfo, uvIndex, wthrInfo, weatherFcst] = await Promise.all([
+    Api.get('/ultraSrtNcst', { area }),
+    Api.get('/uvidx', { area }),
+    Api.get('/wthrInfo', { area }),
+    Api.get('/ultraSrtFcst', { area }),
+  ]);
 
-  weather = { ...weatherInfo.Current, uvIndex: uvIndex.h0, wthrInfo: wthrInfo.t1.slice(0, -4), sky };
-
-  switch (weather.PTY) {
+  switch (weatherInfo.Current.PTY) {
     case 0:
       icon = '맑음';
-      if (weather.sky in [2, 3]) {
+      if (weatherFcst.forecast[0].SKY in [2, 3]) {
         icon = '구름';
-      } else if (weather.sky === 4) {
+      } else if (weatherFcst.forecast[0].SKY === 4) {
         icon = '흐림';
       }
       break;
     case 1:
-      if (weather.RN1 >= 15) icon = '강한 비';
+      if (weatherInfo.Current.RN1 >= 15) icon = '강한 비';
       icon = '비';
       break;
     case 2:
@@ -50,8 +42,17 @@ async function ArrangeWeather({ area }) {
       icon = '눈날림';
       break;
     default:
-      icon = 'sunny';
+      icon = '보통';
   }
+
+  try {
+    outfit = await Api.get('/outfit', { temp: weatherInfo.Current.T1H, wx: icon });
+    sky = weatherFcst.forecast[0].SKY;
+  } catch (err) {
+    console.log(err);
+  }
+
+  weather = { ...weatherInfo.Current, uvIndex: uvIndex.h0, wthrInfo: wthrInfo.t1.slice(0, -4), sky, outfit };
 
   return { weather, icon };
 }
