@@ -8,7 +8,6 @@ import './fonts/GMARKETSANSTTFLIGHT.TTF';
 import './fonts/GMARKETSANSTTFMEDIUM.TTF';
 import './index.css';
 
-
 ReactDOM.render(
   <React.StrictMode>
     <App />

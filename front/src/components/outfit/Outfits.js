@@ -6,6 +6,7 @@ import Outer from './Outer';
 import Shoes from './Shoes';
 
 function Outfit({ temperature }) {
+  // props로 outfit을 받아오게 수정
   const [attire, setAttire] = useState(null);
 
   useEffect(() => {
