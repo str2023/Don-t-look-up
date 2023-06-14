@@ -8,6 +8,8 @@ import Intro from './components/intro/Intro';
 import User from './components/user/User';
 import Favorite from './components/favorite/Favorite';
 import ContextProvider from './contexts/context';
+import './index.css';
+
 
 function App() {
   return (

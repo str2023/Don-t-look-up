@@ -28,7 +28,6 @@ const Header = () => {
     // 로그인 클릭 했을시 LoginPage 안내
     navigate('/login');
   };
-
   const handleLogout = () => {
     // 로그아웃 클릭했을시 IntroPage 안내
     sessionStorage.removeItem('userToken');
@@ -44,22 +43,23 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: '#42bff5' }}>
       <Toolbar>
-        <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuClick}>
-          <MenuIcon />
-        </IconButton>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuClick}>
+            <MenuIcon />
+          </IconButton>
+          <Link to="/">
+            <img src={logoWhite} alt="logo white" style={{ height: '4em' }} />
+          </Link>
+        </div>
         <Menu anchorEl={menuAnchorEl} open={Boolean(menuAnchorEl)} onClose={handleMenuClose} keepMounted>
           {/* Add your menu items here */}
           <MenuItem onClick={() => navigate('/main')}>메인페이지</MenuItem>
           <MenuItem onClick={() => navigate('/user')}>마이페이지</MenuItem>
           <MenuItem onClick={() => navigate('/favorite')}>즐겨찾기</MenuItem>
         </Menu>
-        <div style={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-          <Link to="/">
-            <img src={logoWhite} alt="logo white" style={{ height: '4rem' }} />
-          </Link>
-        </div>
+        <div style={{ flex: 1 }} /> {/* This empty div pushes the rest of the content to the right side */}
         <CurrentPostButton />
         <PostSearchDrawer />
         {!userState.isLoggedIn && (

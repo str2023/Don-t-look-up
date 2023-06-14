@@ -1,57 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
-import { makeStyles } from '@material-ui/core';
+import { Box, Button, Typography } from '@mui/material';
 import axios from 'axios';
+import Lottie from 'lottie-react';
+import animationData from '../../8595-weather-app-animation.json';
 
-const useStyles = makeStyles((theme) => ({
-  introContainer: {
-    width: '100%',
-    height: '100vh',
-    backgroundImage: 'url("image")',
-    backgroundSize: 'cover',
-    color: 'white',
-  },
-  banner: {
-    width: '100%',
-    height: '95vh',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  introTitle: {
-    fontSize: '3em',
-  },
-  button: {
-    marginTop: '1em',
-  },
-  graphsContainer: {
-    width: '100%',
-    height: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-  },
-  graph: {
-    width: '80%',
-  },
-  graphTitle: {
-    fontSize: '2em',
-    textAlign: 'center',
-  },
-  lineChart: {
-    marginTop: '2em',
-  }
-}));
 
 function Intro() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const classes = useStyles();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -96,23 +54,65 @@ const handleScrollToGraphs = () => {
 
 
 
-  return (
-    <div className={classes.introContainer}>
-      <div className={classes.banner}>
-        <h1 className={classes.introTitle}>기후에 따른 옷차림 추천 당신의 기상 패션 가이드</h1>
-        <button className={classes.button} onClick={handleButtonClick}>시작하기</button>
-        <Button variant="contained" color="primary" onClick={handleScrollToGraphs} className={classes.button}>
-          더 알아보기
-        </Button>
-      </div>
+return (
+  <Box sx={{
+    width: '100%',
+    height: '100vh',
+    color: 'white',
+    backgroundColor: '#BDDFF8',
+  }}>
+    <Lottie animationData={animationData} 
+    style={{ 
+      position: 'absolute', 
+      top: 0, left: 0, 
+      height: '100%', 
+      width: '100%', 
+      zIndex: -1 }} />
+    <Box sx={{
+      width: '100%',
+      height: '94vh',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
+      <Typography sx={{ fontSize: '4em', color: '#fff', fontFamily: 'GmarketSansMedium' }}>
+        기후에 따른 옷차림 추천
+      </Typography>
+      <Typography sx={{ fontSize: '4em', color: '#fff', fontFamily: 'GmarketSansMedium' }}>
+        당신의 기상 패션 가이드
+      </Typography>
+      <Button 
+        variant="contained" 
+        size="large"
+        color='primary'
+        onClick={handleButtonClick} 
+        sx={{ marginTop: '1em', fontSize: '2em', }}  // Increase font size using fontSize in sx property
+      >
+        시작하기
+      </Button>
+      <Button variant="contained" color="primary" onClick={handleScrollToGraphs} sx={{ marginTop: '1em' }}>
+        더 알아보기
+      </Button>
+    </Box>
 
-      <div className={classes.graphsContainer}>
-        <div className={classes.graph}>
-          <h2 className={classes.graphTitle}>전세계 온실가스 배출량 차트</h2>
+    <Box sx={{
+      width: '100%',
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#70C0AC',
+    }}>
+      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ width: '40%' }}>
+          <Typography sx={{ fontSize: '2em', textAlign: 'center', fontFamily: 'GmarketSansMedium', }}>
+            전세계 온실가스 배출량 차트
+          </Typography>
           <LineChart
-            className={classes.lineChart}
-            width={500}
-            height={300}
+            width={800}
+            height={600}
             data={data}
             margin={{
               top: 5,
@@ -120,20 +120,39 @@ const handleScrollToGraphs = () => {
               left: 20,
               bottom: 5,
             }}
+            sx={{ marginTop: '2em' }}
           >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="year" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="Non-OECD" stroke="#8884d8" activeDot={{ r: 8 }} />
-          <Line type="monotone" dataKey="OECD" stroke="#82ca9d" />
-          <Line type="monotone" dataKey="World" stroke="#ff7300" />
-        </LineChart>
-        </div>
-      </div>
-    </div>
-  );
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="year" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="Non-OECD" stroke="#8884d8" activeDot={{ r: 8 }} />
+            <Line type="monotone" dataKey="OECD" stroke="#82ca9d" />
+            <Line type="monotone" dataKey="World" stroke="#ff7300" />
+          </LineChart>
+        </Box>
+        <Box sx={{ 
+        width: '40%', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        justifyContent: 'center', 
+        alignItems: 'center' 
+        }}>
+          <Typography sx={{ 
+            fontSize: '1.5em', 
+            textAlign: 'center', 
+            fontFamily: 'GmarketSansMedium', 
+          }}>
+            온실가스로 인해
+            기후변화가 계속 일어나고 있습니다
+            어리쿵 저리쿵쿵
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
+  </Box>
+);
 }
 
 export default Intro;
