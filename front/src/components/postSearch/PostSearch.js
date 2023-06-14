@@ -18,14 +18,18 @@ function PostSearchDrawer() {
   };
 
   const Complete = (data) => {
+    if (data.jibunAddress === '') {
+      setArea(data.autoJibunAddress);
+    } else {
+      setArea(data.jibunAddress);
+    }
     setSearch(false);
-    setArea(data.jibunAddress);
   };
 
   return (
     <div>
       <Button onClick={toggleDrawer(true)} color="inherit">
-        검색
+        {area}
       </Button>
       <Drawer anchor="top" open={search} onClose={toggleDrawer(false)}>
         <div>
