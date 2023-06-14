@@ -25,7 +25,7 @@ const CurrentPostButton = () => {
 
   return (
     <Button color="inherit" onClick={getCurrentPost}>
-      현위치
+      현위치로 설정
     </Button>
   );
 };
