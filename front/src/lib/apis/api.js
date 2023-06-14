@@ -32,15 +32,15 @@ async function post(endpoint, data) {
 }
 
 async function put(endpoint, data) {
-  const bodyData = JSON.stringify(data);
   console.log(`%cPUT 요청: ${serverUrl + endpoint}`, 'color: #059c4b;');
-  console.log(`%cPUT 요청 데이터: ${bodyData}`, 'color: #059c4b;');
+  console.log(`%cPUT 요청 데이터: ${data}`, 'color: #059c4b;');
 
-  return axios.put(serverUrl + endpoint, bodyData, {
+  return axios.put(serverUrl + endpoint, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
     },
+    data,
   });
 }
 
@@ -57,12 +57,15 @@ async function patch(endpoint, data) {
   });
 }
 
-async function del(endpoint, params = '') {
-  console.log(`DELETE 요청 ${`${serverUrl + endpoint}/${params}`}`);
-  return axios.delete(`${serverUrl + endpoint}/${params}`, {
+async function del(endpoint, data) {
+  console.log(`%cDELETE 요청: ${serverUrl + endpoint}`, 'color: #296aba;');
+  console.log(`%cDELETE 요청 데이터: ${data}`, 'color: #296aba;');
+
+  return axios.delete(`${serverUrl + endpoint}`, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
     },
+    data,
   });
 }
 
