@@ -28,10 +28,9 @@ const Header = () => {
     // 로그인 클릭 했을시 LoginPage 안내
     navigate('/login');
   };
-
   const handleLogout = () => {
     // 로그아웃 클릭했을시 IntroPage 안내
-    sessionStorage.removeItem(' userToken ');
+    sessionStorage.removeItem('userToken');
 
     dispatch({ type: 'LOGOUT' });
 

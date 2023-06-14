@@ -10,7 +10,6 @@ import Favorite from './components/favorite/Favorite';
 import ContextProvider from './contexts/context';
 import './index.css';
 
-
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
