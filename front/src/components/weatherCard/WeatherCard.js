@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Avatar, Collapse, CardActions, CardContent, CardHeader, Card, Divider, Typography, CardActionArea, Grid } from '@mui/material';
+import { Avatar, Collapse, CardActions, CardContent, CardHeader, Card, Divider, Typography, CardActionArea, Grid, Box } from '@mui/material';
 import './WeatherCard.css';
 import { useNavigate } from 'react-router-dom';
 import ArrangeWeather from '../../lib/utils/ArrangeWeather';
@@ -23,7 +23,12 @@ export default function WeatherCard({ area }) {
   };
 
   const getWeather = useCallback(async () => {
-    const data = await ArrangeWeather({ area });
+    let data;
+    try {
+      data = await ArrangeWeather({ area });
+    } catch (err) {
+      console.log(err);
+    }
     const wthrInfoLine = data.weather.wthrInfo.replace(/\n/g, ' ');
     setIcon(data.icon);
     setWeather(() => {
@@ -36,51 +41,63 @@ export default function WeatherCard({ area }) {
     getWeather();
   }, [getWeather]);
 
+  const isWeather = Object.keys(weather).length > 0;
+
   return (
     <Card sx={{ maxWidth: 400 }}>
-      <CardActionArea onClick={handleWeatherClick}>
-        <CardHeader avatar={<Avatar alt="날씨" src={`${process.env.PUBLIC_URL}/${icon}.png`} uriencoding="utf-8" />} title={area} />
-        <CardContent>
-          <Grid container>
-            <Grid item p={2}>
-              <Typography variant="h5">
-                날씨: {icon}
-                <br />
-                기온: {weather.T1H}도
-                <br />
-                습도: {weather.REH}%
-                <br />
-                풍속: {weather.WSD}m/s
+      {isWeather ? (
+        <>
+          <CardActionArea onClick={handleWeatherClick}>
+            <CardHeader avatar={<Avatar alt="날씨" src={`${process.env.PUBLIC_URL}/${icon}.png`} uriencoding="utf-8" />} title={area} />
+            <CardContent>
+              <Grid container>
+                <Grid item p={2}>
+                  <Typography variant="h5">
+                    날씨: {icon}
+                    <br />
+                    기온: {weather.T1H}도
+                    <br />
+                    습도: {weather.REH}%
+                    <br />
+                    풍속: {weather.WSD}m/s
+                  </Typography>
+                </Grid>
+                <Divider variant="middle" orientation="vertical" flexItem />
+                <Grid item p={2}>
+                  <Typography variant="h5">
+                    상의: {weather.outfit?.clothes?.[0]?.top[0]}
+                    <br />
+                    하의: {weather.outfit?.clothes?.[0]?.bottom[0]}
+                    <br />
+                    신발: {weather.outfit?.clothes?.[0]?.shoes[0]}
+                    <br />
+                    준비물: {weather.outfit?.item?.[0]?.top[0]}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </CardActionArea>
+          <Divider variant="middle" />
+          <CardActionArea>
+            <CardActions disableSpacing className="flow-text">
+              <Typography className="flow-wrap" onClick={handleExpandClick} aria-expanded={expanded}>
+                {weather.wthrInfoLine}
               </Typography>
-            </Grid>
-            <Divider variant="middle" orientation="vertical" flexItem />
-            <Grid item p={2}>
-              <Typography variant="h5">
-                상의: {weather.outfit?.clothes?.[0]?.top[0]}
-                <br />
-                하의: {weather.outfit?.clothes?.[0]?.bottom[0]}
-                <br />
-                신발: {weather.outfit?.clothes?.[0]?.shoes[0]}
-                <br />
-                준비물: {weather.outfit?.item?.[0]?.top[0]}
-              </Typography>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </CardActionArea>
-      <Divider variant="middle" />
-      <CardActionArea>
-        <CardActions disableSpacing className="flow-text">
-          <Typography className="flow-wrap" onClick={handleExpandClick} aria-expanded={expanded}>
-            {weather.wthrInfoLine}
+            </CardActions>
+          </CardActionArea>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent className="text" p={2}>
+              <pre>{weather.wthrInfo}</pre>
+            </CardContent>
+          </Collapse>
+        </>
+      ) : (
+        <Box width={400} height={300}>
+          <Typography align="center" variant="h4" p={15}>
+            로딩 중...
           </Typography>
-        </CardActions>
-      </CardActionArea>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent className="text" p={2}>
-          <pre>{weather.wthrInfo}</pre>
-        </CardContent>
-      </Collapse>
+        </Box>
+      )}
     </Card>
   );
 }

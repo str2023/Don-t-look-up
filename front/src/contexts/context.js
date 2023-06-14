@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
 import React, { createContext, useReducer, useEffect, useState } from 'react';
 import loginReducer from '../store/reducer/loginReducer';
 import * as Api from '../lib/apis/api';
@@ -38,7 +37,6 @@ const ContextProvider = (props) => {
     return 'loading...';
   }
 
-  // eslint-disable-next-line react/destructuring-assignment
   return <UserContext.Provider value={{ userState, dispatch, area, setArea }}>{props.children}</UserContext.Provider>;
 };
 

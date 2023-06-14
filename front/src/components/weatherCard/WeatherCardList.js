@@ -1,39 +1,68 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import React, { useCallback, useContext, useState } from 'react';
+import { Box, Button, Grid, Typography } from '@mui/material';
+import { useLongPress } from 'use-long-press';
 import WeatherCard from './WeatherCard';
+import * as Api from '../../lib/apis/api';
+import { UserContext } from '../../contexts/context';
 
-const WeatherCardList = ({ areaArray }) => {
-  const [areas, setAreas] = useState([]);
+const WeatherCardList = (props) => {
+  const [areaKey, setAreaKey] = useState('');
+  const { area } = useContext(UserContext);
+  const { favorite, setChange, change } = props;
 
-  useEffect(() => {
-    setAreas(() => {
-      const newAreas = [...areaArray];
-      return newAreas;
-    });
-  }, [areaArray]);
+  const callback = useCallback(async () => {
+    if (window.confirm('해당 주소를 즐겨찾기에서 제외하시겠습니까?')) {
+      try {
+        await Api.delete('/user/favorite', { area: areaKey });
+        setChange(!change);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, [areaKey, change, setChange]);
+
+  const onDeleteFavorite = useLongPress(callback, {
+    onStart: (e) => setAreaKey(e.currentTarget.getAttribute('data-key')),
+    threshold: 700,
+  });
+
+  const handleAddFavorite = async () => {
+    try {
+      await Api.post('/user/favorite', { area });
+      setChange(!change);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Box justifyContent="center">
-      <Typography className="modelTitle" variant="h4">
+      <Typography className="modelTitle" variant="h3" align="center" p={3}>
         즐겨찾기
       </Typography>
-      {areas.length === 0 && (
-        <Typography variant="body2">
+      {Object.keys(favorite).length === 0 && (
+        <Typography variant="h6" align="center" p={10}>
           즐겨찾기가 없습니다.
           <br />
           <br />
-          현재 장소를 즐겨찾기해보세요.
+          현재 위치를 즐겨찾기해보세요.
         </Typography>
       )}
-      {areas.length > 0 && (
+      {Object.keys(favorite).length > 0 && (
         <Grid container maxWidth="xs" justifyContent="space-evenly">
-          {areas.map((area) => (
-            <Grid item key={area} p={2}>
-              <WeatherCard area={area} />
+          {Object.values(favorite).map((value) => (
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            <Grid item key={value} p={2} data-key={value} {...onDeleteFavorite()}>
+              <WeatherCard area={value} />
             </Grid>
           ))}
         </Grid>
       )}
+      <Box textAlign="center">
+        <Button variant="contained" color="primary" onClick={handleAddFavorite}>
+          추가하기
+        </Button>
+      </Box>
     </Box>
   );
 };
