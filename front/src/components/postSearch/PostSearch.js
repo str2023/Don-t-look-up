@@ -1,34 +1,39 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
-import './postSearch.css';
+import { Drawer, Button } from '@mui/material';
+import { UserContext } from '../../contexts/context';
 
-const Post = (props) => {
-  const { setArea } = props;
-  const complete = (data) => {
-    let fullAddress = data.address;
-    let extraAddress = '';
+// 주소 검색 Drawer
 
-    if (data.addressType === 'R') {
-      if (data.bname !== '') {
-        extraAddress += data.bname;
-      }
-      if (data.buildingName !== '') {
-        extraAddress += extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
-      }
-      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+function PostSearchDrawer() {
+  const [search, setSearch] = useState(false);
+  const { area, setArea } = useContext(UserContext);
+
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
     }
-    console.log(data);
-    console.log(fullAddress);
-    console.log(data.zonecode);
 
-    setArea(fullAddress);
+    setSearch(open);
+  };
+
+  const Complete = (data) => {
+    setSearch(false);
+    setArea(data.jibunAddress);
   };
 
   return (
     <div>
-      <DaumPostcode className="postmodal" autoClose onComplete={complete} />
+      <Button onClick={toggleDrawer(true)} color="inherit">
+        검색
+      </Button>
+      <Drawer anchor="top" open={search} onClose={toggleDrawer(false)}>
+        <div>
+          <DaumPostcode onComplete={Complete} />
+        </div>
+      </Drawer>
     </div>
   );
-};
+}
 
-export default Post;
+export default PostSearchDrawer;
