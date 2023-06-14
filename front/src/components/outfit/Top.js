@@ -1,4 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from 'react';
+import Slider from 'react-slick';
+import styled from 'styled-components';
 import 누빔옷이미지 from '../../assets/outfitImage/top/누빔 옷.png';
 import 가죽옷이미지 from '../../assets/outfitImage/top/가죽 옷.png';
 import 니트이미지 from '../../assets/outfitImage/top/니트.png';
@@ -47,13 +51,47 @@ function Top({ attire }) {
     });
   }, [attire.top, images]);
 
+  const settings = {
+    arrows: true,
+    dots: true, // 슬라이드 밑에 점 보이게
+    infinite: true, // 무한으로 반복
+    speed: 500,
+    autoplay: false,
+    autoplaySpeed: 1500, // 넘어가는 속도
+    slidesToShow: 1,
+    slidesToScroll: 1, // 1장씩 뒤로 넘어가게
+    centerMode: false,
+    centerPadding: '0px', // 0px 하면 슬라이드 끝쪽 이미지가 안잘림
+    variableWidth: true,
+  };
+
   return (
     <div>
-      {top1 && <img src={images[top1]} alt={top1} />}
-      {top2 && <img src={images[top2]} alt={top2} />}
-      {top3 && <img src={images[top3]} alt={top3} />}
+      <SlideWrapper>
+        <Slider {...settings}>
+          {top1 && (
+            <div>
+              <img src={images[top1]} alt={top1} style={{ width: '360px' }} />
+            </div>
+          )}
+          {top2 && (
+            <div>
+              <img src={images[top2]} alt={top2} style={{ width: '360px' }} />
+            </div>
+          )}
+          {top3 && (
+            <div>
+              <img src={images[top3]} alt={top3} style={{ width: '360px' }} />
+            </div>
+          )}
+        </Slider>
+      </SlideWrapper>
     </div>
   );
 }
 
 export default Top;
+
+const SlideWrapper = styled.div`
+  width: 360px;
+`;
