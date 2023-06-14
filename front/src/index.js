@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'react-datepicker/dist/react-datepicker.css';
+import './fonts/GMARKETSANSTTFBOLD.TTF';
+import './fonts/GMARKETSANSTTFLIGHT.TTF';
+import './fonts/GMARKETSANSTTFMEDIUM.TTF';
+import './index.css';
+
 
 ReactDOM.render(
   <React.StrictMode>
