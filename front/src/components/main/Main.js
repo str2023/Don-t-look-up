@@ -2,9 +2,11 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded';
+import { Button } from '@mui/material';
 import * as Api from '../../lib/apis/api';
 import { UserContext } from '../../contexts/context';
 import Outfit from '../outfit/Outfits';
+import Weather from '../weather/Weather';
 import useMoveScroll from '../../hooks/useMoveScroll';
 
 const useStyles = makeStyles((theme) => ({
@@ -13,17 +15,23 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   tempAndUVIdxContainer: {},
-  weatherInfoContainer: {
+  weatherImageContainer: {
     width: '100%',
     height: '48vh',
-    backgroundColor: '#9BCDD2',
+    backgroundColor: '#f9e9de',
     display: 'grid',
     justifyContent: 'center',
     alignContent: 'center',
     textAlign: 'center',
   },
+  weatherInfoContainer: {
+    alignContent: 'center',
+  },
   outfitContainer: {
     display: 'grid',
+    justifyContent: 'center',
+    alignContent: 'center',
+    textAlign: 'center',
   },
 }));
 
@@ -32,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 function Main() {
   const [temperature, setTemperature] = useState('');
   const [UV, setUV] = useState(null);
+  const [currentWeather, setCurrentWeather] = useState('');
   const navigate = useNavigate();
   const { isLoggedIn } = useContext(UserContext).userState;
   const classes = useStyles();
@@ -48,6 +57,7 @@ function Main() {
     if (area && area !== '') {
       Api.get('/ultraSrtNcst', { area })
         .then((response) => {
+          setCurrentWeather(response.Current);
           setTemperature(response.Current.T1H); // Current.T1H는 현재 기온을 뜻한다
         })
         .catch((error) => {
@@ -78,10 +88,15 @@ function Main() {
   return (
     <div>
       <div className={classes.weatherContainer}>
-        <div className={classes.weatherInfoContainer}>
+        <div className={classes.weatherImageContainer}>
           {/* <img src={소스} alt="날씨 이미지" /> */}
           <p>{temperature ? `${area}의 기온은 ${temperature}입니다` : ''}</p>
           <p>{UV ? `현재 위치의 자외선 수치는 ${UV}입니다` : ''}</p>
+          <Button onclick={handleFavoriteClick}>즐찾추가</Button>
+        </div>
+        <div className={classes.weatherInfoContainer}>
+          <div className={classes.weatherInfoTest} />
+          <Weather currentWeather={currentWeather} />
         </div>
         <div className={classes.outfitContainer}>
           <Outfit temperature={temperature} />
