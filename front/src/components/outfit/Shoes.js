@@ -53,12 +53,12 @@ function Shoes({ attire }) {
         <Slider {...settings}>
           {shoes1 && (
             <div>
-              <img src={images[shoes1]} alt={shoes1} style={{ width: '360px' }} />
+              <img src={images[shoes1]} alt={shoes1} style={{ width: '520px' }} />
             </div>
           )}
           {shoes2 && (
             <div>
-              <img src={images[shoes2]} alt={shoes2} style={{ width: '360px' }} />
+              <img src={images[shoes2]} alt={shoes2} style={{ width: '520px' }} />
             </div>
           )}
         </Slider>
@@ -70,5 +70,6 @@ function Shoes({ attire }) {
 export default Shoes;
 
 const SlideWrapper = styled.div`
-  width: 360px;
+  margin: 0 0 200px 0;
+  width: 520px;
 `;
