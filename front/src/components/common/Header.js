@@ -5,6 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
+import { makeStyles } from '@material-ui/core';
 import logoWhite from '../../assets/Logo_white.png';
 import { UserContext } from '../../contexts/context';
 import PostSearchDrawer from '../postSearch/PostSearch';
@@ -12,7 +13,14 @@ import CurrentPostButton from '../postSearch/CurrentPostButton';
 
 import './Header.css';
 
+const useStyles = makeStyles((theme) => ({
+  styledAppBar: {
+    backgroundColor: `${parseInt(new Date().getHours(), 10) >= 7 && parseInt(new Date().getHours(), 10) <= 19 ? '#89d1eb' : '#20273f'}`,
+  },
+}));
+
 const Header = () => {
+  const classes = useStyles();
   const navigate = useNavigate();
   const { userState, dispatch, setArea } = useContext(UserContext);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -44,7 +52,7 @@ const Header = () => {
   };
 
   return (
-    <AppBar id="bar" position="static" sx={{ backgroundColor: '#42bff5' }}>
+    <AppBar className={classes.styledAppBar} position="static" sx={{ backgroundColor: '#42bff5' }}>
       <Toolbar>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuClick}>
