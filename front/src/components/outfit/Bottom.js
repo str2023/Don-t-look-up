@@ -55,12 +55,12 @@ function Bottom({ attire }) {
         <Slider {...settings}>
           {bottom1 && (
             <div>
-              <img src={images[bottom1]} alt={bottom1} style={{ width: '360px' }} />
+              <img src={images[bottom1]} alt={bottom1} style={{ width: '520px' }} />
             </div>
           )}
           {bottom2 && (
             <div>
-              <img src={images[bottom2]} alt={bottom2} style={{ width: '360px' }} />
+              <img src={images[bottom2]} alt={bottom2} style={{ width: '520px' }} />
             </div>
           )}
         </Slider>
@@ -72,5 +72,5 @@ function Bottom({ attire }) {
 export default Bottom;
 
 const SlideWrapper = styled.div`
-  width: 360px;
+  width: 520px;
 `;

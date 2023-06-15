@@ -71,17 +71,17 @@ function Top({ attire }) {
         <Slider {...settings}>
           {top1 && (
             <div>
-              <img src={images[top1]} alt={top1} style={{ width: '360px' }} />
+              <img src={images[top1]} alt={top1} style={{ width: '560px' }} />
             </div>
           )}
           {top2 && (
             <div>
-              <img src={images[top2]} alt={top2} style={{ width: '360px' }} />
+              <img src={images[top2]} alt={top2} style={{ width: '560px' }} />
             </div>
           )}
           {top3 && (
             <div>
-              <img src={images[top3]} alt={top3} style={{ width: '360px' }} />
+              <img src={images[top3]} alt={top3} style={{ width: '560px' }} />
             </div>
           )}
         </Slider>
@@ -93,5 +93,5 @@ function Top({ attire }) {
 export default Top;
 
 const SlideWrapper = styled.div`
-  width: 360px;
+  width: 560px;
 `;
