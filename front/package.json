@@ -17,13 +17,18 @@
     "dotenv": "^16.1.4",
     "lottie-react": "^2.4.0",
     "mui": "^0.0.1",
+    "notistack": "^3.0.1",
     "react": "^18.2.0",
     "react-datepicker": "^4.12.0",
     "react-daum-postcode": "^3.1.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
+    "react-slick": "^0.29.0",
     "recharts": "^2.6.2",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^6.0.0-rc.3",
+    "use-long-press": "^3.1.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

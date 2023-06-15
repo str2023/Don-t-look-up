@@ -6,7 +6,6 @@ import axios from 'axios';
 import Lottie from 'lottie-react';
 import animationData from '../../Banner.json';
 
-
 function Intro() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -15,26 +14,28 @@ function Intro() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get(`${process.env.PUBLIC_URL  }/carbonEmission.json`);
-      
-      const reshapedData = Object.entries(result.data).reduce((acc, [key, values]) => {
-        Object.entries(values).forEach(([year, emission]) => {
-          const existingYearObject = acc.find(obj => obj.year === year);
-          if (existingYearObject) {
-            existingYearObject[key] = emission;
-          } else {
-            acc.push({
-              year,
-              [key]: emission
-            });
-          }
-        });
-        return acc;
-      }, []).sort((a, b) => a.year - b.year); // 년도를 오름차순으로 정렬
+      const result = await axios.get(`${process.env.PUBLIC_URL}/carbonEmission.json`);
+
+      const reshapedData = Object.entries(result.data)
+        .reduce((acc, [key, values]) => {
+          Object.entries(values).forEach(([year, emission]) => {
+            const existingYearObject = acc.find((obj) => obj.year === year);
+            if (existingYearObject) {
+              existingYearObject[key] = emission;
+            } else {
+              acc.push({
+                year,
+                [key]: emission,
+              });
+            }
+          });
+          return acc;
+        }, [])
+        .sort((a, b) => a.year - b.year); // 년도를 오름차순으로 정렬
 
       setData(reshapedData);
     };
-    
+
     fetchData();
   }, []);
 

@@ -18,14 +18,35 @@ function PostSearchDrawer() {
   };
 
   const Complete = (data) => {
+    if (data.jibunAddress === '') {
+      setArea({
+        type: 'AREA_SELECT',
+        payload: data.autoJibunAddress,
+      });
+    } else {
+      setArea({
+        type: 'AREA_SELECT',
+        payload: data.jibunAddress,
+      });
+    }
     setSearch(false);
-    setArea(data.jibunAddress);
   };
+
+  useEffect(() => {
+    const selectedArea = sessionStorage.getItem('selectedArea');
+    if (selectedArea) {
+      console.log('%c sessionStorage에 area 있음.', 'color: #d93d1a;');
+      setArea({
+        type: 'AREA_SELECT',
+        payload: selectedArea,
+      });
+    }
+  }, [area, setArea]);
 
   return (
     <div>
       <Button onClick={toggleDrawer(true)} color="inherit">
-        검색
+        {area}
       </Button>
       <Drawer anchor="top" open={search} onClose={toggleDrawer(false)}>
         <div>

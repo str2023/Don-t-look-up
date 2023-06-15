@@ -1,75 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { Card } from '@mui/material';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import WeatherCardList from '../weatherCard/WeatherCardList';
+import { UserContext } from '../../contexts/context';
 import * as Api from '../../lib/apis/api';
 
 function Favorite() {
-  const [favorites, setFavorites] = useState([]);
-  const [favoriteDetails, setFavoriteDetails] = useState([]);
+  const [change, setChange] = useState(true);
+  const [favorite, setFavorite] = useState([]);
+  const { userState } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchFavorites = async () => {
-      try {
-        const favoriteData = await Api.get('/user/favorite');
-        setFavorites(() => {
-          const newFavorites = [...favoriteData];
-          return newFavorites;
-        });
-      } catch (error) {
-        console.error('There was an error!', error);
-      }
-    };
+    if (!userState.isLoggedIn) {
+      navigate('/login');
+    }
+  }, [navigate, userState.isLoggedIn]);
 
-    fetchFavorites();
+  const getFavorite = useCallback(async () => {
+    try {
+      const res = await Api.get('/user/favorite');
+      setFavorite(() => {
+        const newFavorite = { ...res };
+        return newFavorite;
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   useEffect(() => {
-    const fetchFavoriteDetails = async () => {
-      try {
-        const details = await Promise.all(
-          favorites.map(async (favorite) => {
-            const temperatureData = await Api.get('/ultraSrtNcst', { area: favorite });
-            const uvData = await Api.get('/uvidx', { area: favorite });
-            const outfitData = await Api.get('/outfit', { temp: temperatureData.Current.T1H });
+    getFavorite();
+  }, [change, getFavorite]);
 
-            return {
-              area: favorite,
-              temperature: temperatureData.Current.T1H,
-              uv: uvData.h0,
-              outfit: outfitData.clothes[0],
-            };
-          }),
-        );
-
-        setFavoriteDetails(details);
-      } catch (error) {
-        console.error('There was an error!', error);
-      }
-    };
-
-    if (favorites.length > 0) {
-      fetchFavoriteDetails();
-    }
-  }, [favorites]);
-
-  return (
-    <div>
-      {favoriteDetails.map((detail) => (
-        <div key={detail.area}>
-          <h3>{detail.area}</h3>
-          <p>기온: {detail.temperature}</p>
-          <p>자외선 수치: {detail.uv}</p>
-          {detail.outfit && (
-            <>
-              <p>상의: {detail.outfit.top.join(', ')}</p>
-              <p>하의: {detail.outfit.bottom.join(', ')}</p>
-              <p>신발: {detail.outfit.shoes.join(', ')}</p>
-              <p>아우터: {detail.outfit.outer || 'None'}</p>
-            </>
-          )}
-        </div>
-      ))}
-    </div>
-  );
+  return userState.isLoggedIn && <WeatherCardList favorite={favorite} setFavorite={setFavorite} setChange={setChange} change={change} />;
 }
 
 export default Favorite;

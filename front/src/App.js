@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
 import Header from './components/common/Header';
 import LoginForm from './components/user/LoginForm';
 import RegisterForm from './components/user/RegisterForm';
@@ -10,21 +11,25 @@ import Favorite from './components/favorite/Favorite';
 import ContextProvider from './contexts/context';
 import './index.css';
 
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 function App() {
   return (
     <Router>
-      <ContextProvider>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Intro />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/main" element={<Main />} />
-          <Route path="/user" element={<User />} />
-          <Route path="/favorite" element={<Favorite />} />
-        </Routes>
-      </ContextProvider>
+      <SnackbarProvider maxSnack={3}>
+        <ContextProvider>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Intro />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/register" element={<RegisterForm />} />
+            <Route path="/main" element={<Main />} />
+            <Route path="/user" element={<User />} />
+            <Route path="/favorite" element={<Favorite />} />
+          </Routes>
+        </ContextProvider>
+      </SnackbarProvider>
     </Router>
   );
 }

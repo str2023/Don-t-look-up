@@ -15,8 +15,15 @@ const CurrentPostButton = () => {
         async (position) => {
           const lat = position.coords.latitude; // 위도
           const lon = position.coords.longitude; // 경도
-          const addressInfo = await API.get('/location', { lat, lon });
-          setArea(addressInfo.locationName);
+          try {
+            const addressInfo = await API.get('/location', { lat, lon });
+            setArea({
+              type: 'AREA_SELECT',
+              payload: addressInfo.locationName,
+            });
+          } catch (err) {
+            console.log(err);
+          }
         },
         () => alert('위치권한을 확인해주세요'),
       );
@@ -25,7 +32,7 @@ const CurrentPostButton = () => {
 
   return (
     <Button color="inherit" onClick={getCurrentPost}>
-      현위치
+      현위치로 설정
     </Button>
   );
 };
