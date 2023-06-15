@@ -8,21 +8,43 @@ import { UserContext } from '../../contexts/context';
 import Outfit from '../outfit/Outfits';
 import Weather from '../weather/Weather';
 import useMoveScroll from '../../hooks/useMoveScroll';
+import 밤하늘 from '../../assets/night.png';
+import 낮하늘 from '../../assets/sky.png';
+import 맑음 from '../../assets/sun.png';
 
 const useStyles = makeStyles((theme) => ({
   weatherContainer: {
     width: '100%',
-    height: '100vh',
+    height: 'flex',
   },
-  tempAndUVIdxContainer: {},
   weatherImageContainer: {
     width: '100%',
-    height: '48vh',
-    backgroundColor: '#f9e9de',
+    height: '100vh',
     display: 'grid',
     justifyContent: 'center',
     alignContent: 'center',
     textAlign: 'center',
+    backgroundImage: `url(${낮하늘})`,
+    backgroundSizd: '100vh 100vh',
+    position: 'relative',
+  },
+  styledBtn: {
+    width: '16vh',
+    position: 'absolute',
+    top: '56%',
+    left: '38%',
+  },
+  styledFont: {
+    fontFamily: 'GmarketSansMedium',
+    fontSize: '3vh',
+    padding: '0 0 0.5vh 0',
+    margin: '0 0 0 0',
+  },
+  infoContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'top',
+    marginTop: '4vh',
   },
   weatherInfoContainer: {
     alignContent: 'center',
@@ -89,17 +111,20 @@ function Main() {
     <div>
       <div className={classes.weatherContainer}>
         <div className={classes.weatherImageContainer}>
-          {/* <img src={소스} alt="날씨 이미지" /> */}
-          <p>{temperature ? `${area}의 기온은 ${temperature}입니다` : ''}</p>
-          <p>{UV ? `현재 위치의 자외선 수치는 ${UV}입니다` : ''}</p>
-          <Button onclick={handleFavoriteClick}>즐찾추가</Button>
+          <img src={맑음} alt="맑은 태양 이미지" style={{ width: '600px', marginBottom: '4vh' }} />
+          <p className={classes.styledFont}>{temperature ? `${area}의 현재 기온은 ${temperature}℃입니다` : ''}</p>
+          <p className={classes.styledFont}>{UV ? `현재 위치의 자외선 수치는 ${UV}입니다` : ''}</p>
+          <Button variant="contained" onclick={handleFavoriteClick} className={classes.styledBtn}>
+            즐겨찾기
+          </Button>
         </div>
-        <div className={classes.weatherInfoContainer}>
-          <div className={classes.weatherInfoTest} />
-          <Weather currentWeather={currentWeather} />
-        </div>
-        <div className={classes.outfitContainer}>
-          <Outfit temperature={temperature} />
+        <div className={classes.infoContainer}>
+          <div className={classes.weatherInfoContainer}>
+            <Weather currentWeather={currentWeather} />
+          </div>
+          <div className={classes.outfitContainer}>
+            <Outfit temperature={temperature} />
+          </div>
         </div>
       </div>
     </div>
