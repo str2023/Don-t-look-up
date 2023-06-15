@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { useCallback, useContext, useState } from 'react';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { useLongPress } from 'use-long-press';
