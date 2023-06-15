@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { AppBar, Toolbar, Button, Typography } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { useNavigate, Link } from 'react-router-dom';
+import { AppBar, Toolbar, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
