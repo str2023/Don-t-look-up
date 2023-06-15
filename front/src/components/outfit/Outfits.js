@@ -46,11 +46,11 @@ function Outfit({ weather, icon }) {
 
     const getItems = () => {
       if (icon !== null) {
-        Api.get('/outfit', { weatherCondition: icon })
+        Api.get('/outfit', { wx: icon })
           .then((data) => {
             try {
-              if (data && data.item) {
-                setItem(data.item);
+              if (data && data.items.item && data.items.item[0] > 0) {
+                setItem(data.items.item);
               } else {
                 console.error('Unexpected API');
               }
@@ -71,16 +71,17 @@ function Outfit({ weather, icon }) {
   return (
     <div>
       {attire && (
-        <>
-          <p>오늘의 옷차림</p>
-          <div className={classes.outfitContainer}>
-            <Top attire={attire} />
-            <Outer attire={attire} />
-            <Bottom attire={attire} />
-            <Shoes attire={attire} />
-            {item && <Items item={item} />}
-          </div>
-        </>
+        <div className={classes.outfitContainer}>
+          <Top attire={attire} />
+          <Outer attire={attire} />
+          <Bottom attire={attire} />
+          <Shoes attire={attire} />
+        </div>
+      )}
+      {item && (
+        <div className={classes.outfitContainer}>
+          <Items item={item} />
+        </div>
       )}
     </div>
   );

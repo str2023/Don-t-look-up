@@ -10,6 +10,8 @@ import { UserContext } from '../../contexts/context';
 import PostSearchDrawer from '../postSearch/PostSearch';
 import CurrentPostButton from '../postSearch/CurrentPostButton';
 
+import './Header.css';
+
 const Header = () => {
   const navigate = useNavigate();
   const { userState, dispatch, setArea } = useContext(UserContext);
@@ -42,7 +44,7 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#42bff5' }}>
+    <AppBar id="bar" position="static" sx={{ backgroundColor: '#42bff5' }}>
       <Toolbar>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuClick}>
@@ -54,28 +56,13 @@ const Header = () => {
         </div>
         <Menu anchorEl={menuAnchorEl} open={Boolean(menuAnchorEl)} onClose={handleMenuClose} keepMounted>
           {/* Add your menu items here */}
-          <MenuItem
-            onClick={() => {
-              navigate('/main');
-              setMenuAnchorEl(null);
-            }}
-          >
+          <MenuItem id="menuItem" onClick={() => navigate('/main')}>
             메인페이지
           </MenuItem>
-          <MenuItem
-            onClick={() => {
-              navigate('/user');
-              setMenuAnchorEl(null);
-            }}
-          >
+          <MenuItem id="menuItem" onClick={() => navigate('/user')}>
             마이페이지
           </MenuItem>
-          <MenuItem
-            onClick={() => {
-              navigate('/favorite');
-              setMenuAnchorEl(null);
-            }}
-          >
+          <MenuItem id="menuItem" onClick={() => navigate('/favorite')}>
             즐겨찾기
           </MenuItem>
         </Menu>

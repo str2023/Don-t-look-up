@@ -1,6 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
-import ArrangeWeather from '../../lib/utils/ArrangeWeather';
 
 import 낮맑음이미지 from '../../assets/낮_맑음.png';
 import 밤맑음이미지 from '../../assets/밤_맑음.png';
@@ -21,28 +19,27 @@ const WeatherImage = ({ icon }) => {
 
   const hours = today.getHours();
 
-  const images = {
-    낮맑음: 낮맑음이미지,
-    밤맑음: 밤맑음이미지,
-    낮구름: 낮구름이미지,
-    밤구름: 밤구름이미지,
-    흐림: 흐림이미지,
-    비: 비이미지,
-    '강한 비': 강한비이미지,
-    빗방울: 빗방울이미지,
-    비눈: 비눈이미지,
-    눈: 눈이미지,
-    눈날림: 눈날림이미지,
-    빗방울눈날림: 빗방울눈날림이미지,
-  };
-
-  const getIcon = useCallback(async () => {
-    setWeatherImg(icon);
-  });
+  const images = React.useMemo(
+    () => ({
+      낮맑음: 낮맑음이미지,
+      밤맑음: 밤맑음이미지,
+      낮구름: 낮구름이미지,
+      밤구름: 밤구름이미지,
+      흐림: 흐림이미지,
+      비: 비이미지,
+      '강한 비': 강한비이미지,
+      빗방울: 빗방울이미지,
+      비눈: 비눈이미지,
+      눈: 눈이미지,
+      눈날림: 눈날림이미지,
+      빗방울눈날림: 빗방울눈날림이미지,
+    }),
+    [],
+  );
 
   useEffect(() => {
-    getIcon();
-  }, [getIcon]);
+    setWeatherImg(icon);
+  }, [icon]);
 
   if (weatherImg === '맑음') {
     if (hours >= 7 && hours <= 18) {

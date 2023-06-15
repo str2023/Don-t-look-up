@@ -19,19 +19,21 @@ function Top({ attire }) {
   const [top2, setTop2] = useState(null);
   const [top3, setTop3] = useState(null);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const images = {
-    '누빔 옷': 누빔옷이미지,
-    '가죽 옷': 가죽옷이미지,
-    니트: 니트이미지,
-    맨투맨: 맨투맨이미지,
-    후드: 후드이미지,
-    티셔츠: 티셔츠이미지,
-    블라우스: 블라우스이미지,
-    셔츠: 셔츠이미지,
-    민소매: 민소매이미지,
-    반팔티: 반팔티이미지,
-  };
+  const images = React.useMemo(
+    () => ({
+      '누빔 옷': 누빔옷이미지,
+      '가죽 옷': 가죽옷이미지,
+      니트: 니트이미지,
+      맨투맨: 맨투맨이미지,
+      후드: 후드이미지,
+      티셔츠: 티셔츠이미지,
+      블라우스: 블라우스이미지,
+      셔츠: 셔츠이미지,
+      민소매: 민소매이미지,
+      반팔티: 반팔티이미지,
+    }),
+    [],
+  );
 
   useEffect(() => {
     attire.top.forEach((item, index) => {
@@ -68,6 +70,7 @@ function Top({ attire }) {
   return (
     <div>
       <SlideWrapper>
+        <StyledDiv>TOP</StyledDiv>
         <Slider {...settings}>
           {top1 && (
             <div>
@@ -94,4 +97,21 @@ export default Top;
 
 const SlideWrapper = styled.div`
   width: 560px;
+  margin: 0 0 3.2vh 0;
+  display: inline-block;
+  justify-contents: center;
+  align-items: center;
+`;
+
+const StyledDiv = styled.div`
+  width: 12vh;
+  height: flex;
+  background-color: #efefef;
+  border-radius: 20px;
+  box-shadow: 0px 0px 16px #f4f4f4;
+  font-family: 'GmarketSansMedium';
+  font-size: 16pt;
+  color: #606060;
+  margin: 2vh auto;
+  padding: 0.8vh 2vh;
 `;

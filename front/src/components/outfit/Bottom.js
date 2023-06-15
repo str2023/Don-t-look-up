@@ -12,14 +12,16 @@ function Bottom({ attire }) {
   const [bottom1, setBottom1] = useState(null);
   const [bottom2, setBottom2] = useState(null);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const images = {
-    '기모 바지': 기모바지이미지,
-    면바지: 면바지이미지,
-    슬랙스: 슬랙스이미지,
-    반바지: 반바지이미지,
-    치마: 치마이미지,
-  };
+  const images = React.useMemo(
+    () => ({
+      '기모 바지': 기모바지이미지,
+      면바지: 면바지이미지,
+      슬랙스: 슬랙스이미지,
+      반바지: 반바지이미지,
+      치마: 치마이미지,
+    }),
+    [],
+  );
 
   useEffect(() => {
     attire.bottom.forEach((item, index) => {
@@ -52,6 +54,7 @@ function Bottom({ attire }) {
   return (
     <div>
       <SlideWrapper>
+        <StyledDiv>BOTTOM</StyledDiv>
         <Slider {...settings}>
           {bottom1 && (
             <div>
@@ -75,4 +78,18 @@ const SlideWrapper = styled.div`
   width: 520px;
   display: inline-block;
   padding: 0 0 40px 0;
+  margin: 0 0 3.2vh 0;
+`;
+
+const StyledDiv = styled.div`
+  width: 16vh;
+  height: flex;
+  background-color: #efefef;
+  border-radius: 20px;
+  box-shadow: 0px 0px 16px #f4f4f4;
+  font-family: 'GmarketSansMedium';
+  font-size: 16pt;
+  color: #606060;
+  margin: 2vh auto;
+  padding: 0.8vh 2vh;
 `;

@@ -53,13 +53,14 @@ export default function WeatherCard({ area }) {
         <>
           <CardActionArea onClick={handleWeatherClick}>
             <CardHeader
-              avatar={<Avatar alt="날씨" src={`${process.env.PUBLIC_URL}/${icon}.png`} uriencoding="utf-8" variant="square" />}
+              avatar={<Avatar alt="날씨" src={`${process.env.PUBLIC_URL}/${icon}.png`} uriencoding="utf-8" />}
               title={area}
+              style={{ fontFamily: 'GmarketSansMedium', fontSize: '2vh', lineHeight: '160%' }}
             />
             <CardContent>
               <Grid container>
                 <Grid item p={2}>
-                  <Typography variant="h5">
+                  <Typography variant="h5" style={{ fontFamily: 'GmarketSansMedium', lineHeight: '160%' }}>
                     날씨: {icon}
                     <br />
                     기온: {weather.T1H}도
@@ -71,7 +72,7 @@ export default function WeatherCard({ area }) {
                 </Grid>
                 <Divider variant="middle" orientation="vertical" flexItem />
                 <Grid item p={2}>
-                  <Typography variant="h5">
+                  <Typography variant="h5" style={{ fontFamily: 'GmarketSansMedium', lineHeight: '160%' }}>
                     상의: {weather.outfit?.clothes?.[0]?.top[0]}
                     <br />
                     하의: {weather.outfit?.clothes?.[0]?.bottom[0]}
@@ -87,7 +88,12 @@ export default function WeatherCard({ area }) {
           <Divider variant="middle" />
           <CardActionArea>
             <CardActions disableSpacing className="flow-text">
-              <Typography className="flow-wrap" onClick={handleExpandClick} aria-expanded={expanded}>
+              <Typography
+                className="flow-wrap"
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                style={{ fontFamily: 'GmarketSansMedium', lineHeight: '160%', color: '#89d1eb' }}
+              >
                 {weather.wthrInfoLine}
               </Typography>
             </CardActions>
