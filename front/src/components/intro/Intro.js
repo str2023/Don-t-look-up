@@ -9,7 +9,6 @@ import animationData from '../../Banner.json';
 function Intro() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const topContainerRef = useRef(null);
   const graphsContainerRef = useRef(null);
 
   useEffect(() => {
@@ -51,10 +50,9 @@ function Intro() {
   };
 
   const handleScrollToTop = () => {
-    if (topContainerRef.current) {
-      topContainerRef.current.scrollIntoView({ behavior: 'smooth' }); 
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+  
 
   const handleScrollToGraphs = () => {
     // 클릭시 아래의 그래프로 자동 스크롤
@@ -67,7 +65,6 @@ function Intro() {
 
 return (
   <Box
-    ref={topContainerRef}
     sx={{
       width: '100%',
       height: '100vh',
@@ -170,14 +167,14 @@ return (
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#70C0AC',
-        position: 'relatvie',
+        position: 'relative',
       }}
     >
       <Button
             variant="contained"
             color="primary"
             onClick={handleScrollToTop}
-            sx={{ position: 'relative', top: '0' }}
+            sx={{ position: 'absolute', top: '1em' }}
           >
             위로
         </Button>
@@ -228,7 +225,7 @@ return (
               fontFamily: 'GmarketSansMedium',
             }}
           >
-            온실가스로 인해 기후변화가 계속 일어나고 있습니다 어리쿵 저리쿵쿵
+            계속 증가하는 온실가스 배출량 때문에 세계에서는 지구 온난화로 인한 기후변화를 겪고 있습니다
           </Typography>
         </Box>
       </Box>
