@@ -54,9 +54,30 @@ const Header = () => {
         </div>
         <Menu anchorEl={menuAnchorEl} open={Boolean(menuAnchorEl)} onClose={handleMenuClose} keepMounted>
           {/* Add your menu items here */}
-          <MenuItem onClick={() => navigate('/main')}>메인페이지</MenuItem>
-          <MenuItem onClick={() => navigate('/user')}>마이페이지</MenuItem>
-          <MenuItem onClick={() => navigate('/favorite')}>즐겨찾기</MenuItem>
+          <MenuItem
+            onClick={() => {
+              navigate('/main');
+              setMenuAnchorEl(null);
+            }}
+          >
+            메인페이지
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              navigate('/user');
+              setMenuAnchorEl(null);
+            }}
+          >
+            마이페이지
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              navigate('/favorite');
+              setMenuAnchorEl(null);
+            }}
+          >
+            즐겨찾기
+          </MenuItem>
         </Menu>
         <div style={{ flex: 1 }} /> {/* This empty div pushes the rest of the content to the right side */}
         <CurrentPostButton />
