@@ -13,6 +13,7 @@ import ArrangeWeather from '../../lib/utils/ArrangeWeather';
 import 밤하늘 from '../../assets/night.png';
 import 낮하늘 from '../../assets/sky.png';
 import ActivityCard from '../activity/ActivityCard';
+import WeatherMthd from '../method/WeatherMthd';
 
 const useStyles = makeStyles((theme) => ({
   weatherContainer: {
@@ -161,6 +162,13 @@ function Main() {
             <Outfit weather={weather} icon={icon} />
           </div>
         </div>
+
+        <div className={classes.sentence1}>
+          <p className={classes.styledFont3}>오늘의 날씨를 견디기 위한 행동방침</p>
+          <p className={classes.styledFont4}>날씨를 바꿀 수는 없지만 현명하게 대응할 순 있다!</p>
+        </div>
+
+        <WeatherMthd area={area} />
       </div>
     </div>
   );
