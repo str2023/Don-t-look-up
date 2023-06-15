@@ -13,7 +13,7 @@ import CurrentPostButton from '../postSearch/CurrentPostButton';
 
 const Header = () => {
   const navigate = useNavigate();
-  const { userState, dispatch } = useContext(UserContext);
+  const { userState, dispatch, setArea } = useContext(UserContext);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
 
   const handleMenuClick = (event) => {
@@ -31,7 +31,7 @@ const Header = () => {
   const handleLogout = () => {
     // 로그아웃 클릭했을시 IntroPage 안내
     sessionStorage.removeItem('userToken');
-
+    setArea({ type: 'AREA_DESELECT' });
     dispatch({ type: 'LOGOUT' });
 
     navigate('/');

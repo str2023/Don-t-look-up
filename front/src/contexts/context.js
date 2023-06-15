@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useEffect, useState } from 'react';
 import loginReducer from '../store/reducer/loginReducer';
+import areaReducer from '../store/reducer/areaReducer';
 import * as Api from '../lib/apis/api';
 
 export const UserContext = createContext();
@@ -9,7 +10,9 @@ const ContextProvider = (props) => {
     user: null,
     isLoggedIn: false,
   });
-  const [area, setArea] = useState('서울시');
+
+  const [area, setArea] = useReducer(areaReducer, '서울시');
+
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
   const fetchCurrentUser = async () => {

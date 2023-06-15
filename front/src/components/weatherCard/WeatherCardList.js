@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { Box, Button, Grid, Typography } from '@mui/material';
-import { useLongPress } from 'use-long-press';
+import { useLongPress } from 'use-long-press'; // 롱클릭시 이벤트 라이브러리
 import WeatherCard from './WeatherCard';
 import * as Api from '../../lib/apis/api';
 import { UserContext } from '../../contexts/context';

@@ -18,7 +18,10 @@ export default function WeatherCard({ area }) {
   };
 
   const handleWeatherClick = () => {
-    setArea(area);
+    setArea({
+      type: 'AREA_SELECT',
+      payload: area,
+    });
     navigate('/main');
   };
 
