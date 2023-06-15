@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Avatar, Collapse, CardActions, CardContent, CardHeader, Card, Divider, Typography, CardActionArea, Grid, Box } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import './WeatherCard.css';
 import { useNavigate } from 'react-router-dom';
 import ArrangeWeather from '../../lib/utils/ArrangeWeather';
@@ -18,7 +19,10 @@ export default function WeatherCard({ area }) {
   };
 
   const handleWeatherClick = () => {
-    setArea(area);
+    setArea({
+      type: 'AREA_SELECT',
+      payload: area,
+    });
     navigate('/main');
   };
 
@@ -92,10 +96,8 @@ export default function WeatherCard({ area }) {
           </Collapse>
         </>
       ) : (
-        <Box width={400} height={300}>
-          <Typography align="center" variant="h4" p={15}>
-            로딩 중...
-          </Typography>
+        <Box width={400} height={304}>
+          <CircularProgress />
         </Box>
       )}
     </Card>

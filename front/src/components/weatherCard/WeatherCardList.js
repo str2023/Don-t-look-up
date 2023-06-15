@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { Box, Button, Grid, Typography } from '@mui/material';
-import { useLongPress } from 'use-long-press';
+import { useLongPress } from 'use-long-press'; // 롱클릭시 이벤트 라이브러리
+import { useSnackbar } from 'notistack';
 import WeatherCard from './WeatherCard';
 import * as Api from '../../lib/apis/api';
 import { UserContext } from '../../contexts/context';
@@ -9,17 +10,19 @@ const WeatherCardList = (props) => {
   const [areaKey, setAreaKey] = useState('');
   const { area } = useContext(UserContext);
   const { favorite, setChange, change } = props;
+  const { enqueueSnackbar } = useSnackbar();
 
   const callback = useCallback(async () => {
     if (window.confirm('해당 주소를 즐겨찾기에서 제외하시겠습니까?')) {
       try {
         await Api.delete('/user/favorite', { area: areaKey });
         setChange(!change);
+        enqueueSnackbar(`${areaKey}가 즐겨찾기에서 제외되었습니다!`, { variant: 'success' });
       } catch (err) {
         console.log(err);
       }
     }
-  }, [areaKey, change, setChange]);
+  }, [areaKey, change, enqueueSnackbar, setChange]);
 
   const onDeleteFavorite = useLongPress(callback, {
     onStart: (e) => setAreaKey(e.currentTarget.getAttribute('data-key')),
@@ -27,11 +30,16 @@ const WeatherCardList = (props) => {
   });
 
   const handleAddFavorite = async () => {
-    try {
-      await Api.post('/user/favorite', { area });
-      setChange(!change);
-    } catch (err) {
-      console.log(err);
+    if (Object.values(favorite).find((v) => v === area)) {
+      enqueueSnackbar(`${area}는 이미 즐겨찾기 중입니다!`, { variant: 'warning' });
+    } else {
+      try {
+        await Api.post('/user/favorite', { area });
+        setChange(!change);
+        enqueueSnackbar(`${area}가 즐겨찾기되었습니다!`, { variant: 'success' });
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 

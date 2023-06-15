@@ -19,12 +19,29 @@ function PostSearchDrawer() {
 
   const Complete = (data) => {
     if (data.jibunAddress === '') {
-      setArea(data.autoJibunAddress);
+      setArea({
+        type: 'AREA_SELECT',
+        payload: data.autoJibunAddress,
+      });
     } else {
-      setArea(data.jibunAddress);
+      setArea({
+        type: 'AREA_SELECT',
+        payload: data.jibunAddress,
+      });
     }
     setSearch(false);
   };
+
+  useEffect(() => {
+    const selectedArea = sessionStorage.getItem('selectedArea');
+    if (selectedArea) {
+      console.log('%c sessionStorage에 area 있음.', 'color: #d93d1a;');
+      setArea({
+        type: 'AREA_SELECT',
+        payload: selectedArea,
+      });
+    }
+  }, [area, setArea]);
 
   return (
     <div>
