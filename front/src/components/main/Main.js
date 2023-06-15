@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded';
@@ -12,6 +12,7 @@ import useMoveScroll from '../../hooks/useMoveScroll';
 import ArrangeWeather from '../../lib/utils/ArrangeWeather';
 import 밤하늘 from '../../assets/night.png';
 import 낮하늘 from '../../assets/sky.png';
+import ActivityCard from '../activity/ActivityCard';
 
 const useStyles = makeStyles((theme) => ({
   weatherContainer: {
@@ -104,6 +105,7 @@ function Main() {
 
   return (
     <div>
+      <ActivityCard temp={weather.T1H} wx={icon} area={area} />
       <div className={classes.weatherContainer}>
         <div className={classes.weatherImageContainer}>
           <WeatherImage icon={icon} />

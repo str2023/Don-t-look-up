@@ -1,8 +1,11 @@
+/* eslint-disable no-nested-ternary */
 import React, { useCallback, useEffect, useState } from 'react';
 import { Avatar, CardActions, CardContent, CardHeader, Card, Typography, Box } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import * as Api from '../../lib/apis/api';
 import './ActivityCard.css';
 
@@ -11,7 +14,8 @@ const ActivityCard = (props) => {
   const [tryActivity, setTryActivity] = useState('');
   const [activity, setActivity] = useState('');
   const [randomIdx, setRandomIdx] = useState(0);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [thumbUp, setThumbUp] = useState(false);
+  const [thumbDown, setThumbDown] = useState(false);
 
   const getActivity = useCallback(async () => {
     try {
@@ -34,25 +38,44 @@ const ActivityCard = (props) => {
     }
   }, [area, temp, wx]);
 
-  const handleActivityFavorite = () => {
-    console.log(tryActivity[randomIdx]);
-    if (!isFavorite) {
+  const handleThumbUp = async () => {
+    if (!thumbUp) {
       const activityData = { temp, wx, area, activity: tryActivity[randomIdx] };
       try {
-        const res = Api.post('/activity', activityData);
+        const res = await Api.post('/activity', activityData);
       } catch (err) {
         console.log(err);
       }
-      setIsFavorite(true);
+      setThumbUp(true);
     }
+  };
+
+  const handleThumbDown = () => {
+    setThumbDown(true);
+  };
+
+  const comment = () => {
+    if (!thumbUp) {
+      if (tryActivity.length > 0) {
+        return `오늘 날씨에 [${tryActivity[randomIdx]}] 어떠세요?`;
+      }
+      if (thumbDown) {
+        return '고마워요!';
+      }
+      return '정보가 없어서 알 수가 없네요 ㅠㅠ';
+    }
+    return '좋아요!';
   };
 
   useEffect(() => {
     getActivity();
+    setTimeout(() => {
+      setThumbUp(true);
+    }, 5000);
   }, [getActivity]);
 
   return (
-    <Card sx={{ display: 'inline-block', paddingInline: 3, paddingBlock: 1 }} className={isFavorite ? 'activityOut' : 'activityIn'}>
+    <Card sx={{ display: 'inline-block', paddingInline: 3, paddingBlock: 1 }} className={thumbUp || thumbDown ? 'activityOut' : 'activityIn'}>
       <CardHeader
         avatar={<Avatar alt="활동" src={`${process.env.PUBLIC_URL}/${wx}.png`} />}
         title={activity[0] ? `${area}의 이웃들은 지금 ${activity[0]} 중이에요!` : `${area}의 이웃들은 지금 무엇을 하고 있을까요?`}
@@ -66,12 +89,15 @@ const ActivityCard = (props) => {
       >
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            {!isFavorite ? `오늘 날씨에 [${tryActivity[randomIdx]}] 어떠세요?` : '좋아요!'}
+            {comment()}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites" onClick={handleActivityFavorite}>
-            {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          <IconButton aria-label="thumbUp" onClick={handleThumbUp}>
+            {thumbUp ? <ThumbUpAltIcon /> : <ThumbUpOffAltIcon />}
+          </IconButton>
+          <IconButton aria-label="thumbDown" onClick={handleThumbDown}>
+            {thumbDown ? <ThumbDownAltIcon /> : <ThumbDownOffAltIcon />}
           </IconButton>
         </CardActions>
       </Box>
