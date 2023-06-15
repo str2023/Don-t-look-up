@@ -11,13 +11,15 @@ function Shoes({ attire }) {
   const [shoes1, setShoes1] = useState(null);
   const [shoes2, setShoes2] = useState(null);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const images = {
-    부츠: 부츠이미지,
-    운동화: 운동화이미지,
-    구두: 구두이미지,
-    샌들: 샌들이미지,
-  };
+  const images = React.useMemo(
+    () => ({
+      부츠: 부츠이미지,
+      운동화: 운동화이미지,
+      구두: 구두이미지,
+      샌들: 샌들이미지,
+    }),
+    [],
+  );
 
   useEffect(() => {
     attire.shoes.forEach((item, index) => {
@@ -50,6 +52,7 @@ function Shoes({ attire }) {
   return (
     <div>
       <SlideWrapper>
+        <StyledDiv>SHOES</StyledDiv>
         <Slider {...settings}>
           {shoes1 && (
             <div>
@@ -71,5 +74,20 @@ export default Shoes;
 
 const SlideWrapper = styled.div`
   padding: 0 0 40px 0;
+  display: inline-block;
+  margin: 0 0 3.2vh 0;
   width: 520px;
+`;
+
+const StyledDiv = styled.div`
+  width: 12vh;
+  height: flex;
+  background-color: #efefef;
+  border-radius: 20px;
+  box-shadow: 0px 0px 16px #f4f4f4;
+  font-family: 'GmarketSansMedium';
+  font-size: 16pt;
+  color: #606060;
+  margin: 2vh auto;
+  padding: 0.8vh 2vh;
 `;

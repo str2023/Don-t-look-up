@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
   weatherContainer: {
     width: '100%',
     height: 'flex',
+    display: 'inline-block',
+    justifyContent: 'center',
+    alignContent: 'center',
   },
   weatherImageContainer: {
     width: '100%',
@@ -25,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignContent: 'center',
     textAlign: 'center',
-    backgroundImage: `url(${밤하늘})`,
+    backgroundImage: `url(${parseInt(new Date().getHours(), 10) >= 7 && parseInt(new Date().getHours(), 10) <= 19 ? 낮하늘 : 밤하늘})`,
     backgroundSize: 'cover',
     position: 'relative',
   },
@@ -38,14 +41,42 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '10px',
     padding: '3.2vh 6vh 3.2vh 6vh',
   },
-  styledFont: {
+  sentence1: {
+    width: '76vh',
+    height: '12vh',
+    borderRadius: '20px',
+    backgroundColor: `${parseInt(new Date().getHours(), 10) >= 7 && parseInt(new Date().getHours(), 10) <= 19 ? '#89d1eb' : '#20273f'}`,
+    color: `${parseInt(new Date().getHours(), 10) >= 7 && parseInt(new Date().getHours(), 10) <= 19 ? '#20273f' : '#efefef'}`,
+    margin: '4.8vh auto',
+    fontSize: '3.2vh',
+    display: 'grid',
+    textAlign: 'center',
+    alignItems: 'center',
+  },
+  styledFont1: {
+    fontFamily: 'GmarketSansMedium',
+    fontSize: '2.6vh',
+    margin: '0 0 4vh 0',
+    color: '#ffffff',
+  },
+  styledFont2: {
     fontFamily: 'GmarketSansMedium',
     fontSize: '2.6vh',
     margin: '0 0 0 0',
   },
-  outfitIntro: {
-    backgroundColor: '#47b4e6',
-    height: '4vh',
+  styledFont3: {
+    fontFamily: 'GmarketSansMedium',
+    fontSize: '3.2vh',
+    fontWeight: '600',
+    margin: '2vh 0 0 0',
+  },
+  styledFont4: {
+    fontFamily: 'GmarketSansMedium',
+    fontSize: '2.4vh',
+    fontWeight: '100',
+    color: '#efefef',
+    opacity: '64%',
+    margin: '0 0 3.2vh 0',
   },
   detailContainer: {
     display: 'flex',
@@ -89,6 +120,7 @@ function Main() {
       console.log(err);
     }
     setIcon(data.icon);
+    console.log(data.item);
     setWeather(() => {
       const newWeather = { ...data.weather, ...data.uvIndex, ...data.outfit };
       return newWeather;
@@ -106,15 +138,20 @@ function Main() {
     <div>
       <div className={classes.weatherContainer}>
         <div className={classes.weatherImageContainer}>
+          <p className={classes.styledFont1}>{`${area}의 현재 날씨는 ... < ${icon} >`}</p>
           <WeatherImage icon={icon} />
           <div className={classes.infoContainer}>
-            <p className={classes.styledFont}>{weather.T1H ? `${area}의 현재 기온은 ${weather.T1H}℃입니다` : ''}</p>
-            <p className={classes.styledFont}>{weather.uvIndex ? `현재 위치의 자외선 수치는 ${weather.uvIndex}㎽.sec/c㎡ 입니다` : ''}</p>
+            <p className={classes.styledFont2}>{weather.T1H ? `${area}의 현재 기온은 ${weather.T1H}℃입니다` : ''}</p>
+            <p className={classes.styledFont2}>{weather.uvIndex ? `현재 위치의 자외선 수치는 ${weather.uvIndex}㎽.sec/c㎡ 입니다` : ''}</p>
           </div>
         </div>
 
+        <div className={classes.sentence1}>
+          <p className={classes.styledFont3}>오늘의 날씨를 견디기 위한 옷차림</p>
+          <p className={classes.styledFont4}>날씨를 바꿀 수 없다면 옷차림을 바꾸자!</p>
+        </div>
+
         <div className={classes.detailContainer}>
-          <div className={classes.outfitIntro}>오늘의 날씨를 견디기 위한 옷차림</div>
           <div className={classes.weatherInfoContainer}>
             <Weather currentWeather={weather} />
           </div>

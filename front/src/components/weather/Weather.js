@@ -6,11 +6,21 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   styledFontsm: {
     fontFamily: 'GmarketSansMedium',
-    fontSize: '2vh',
+    fontSize: '2.8vh',
+    padding: '0',
+    margin: '1.2vh 0 4vh 0',
   },
-  styledFontmd: {
+  styledFontmd1: {
     fontFamily: 'GmarketSansMedium',
     fontSize: '4vh',
+    padding: '0',
+    margin: '2.8vh 0 0 0',
+  },
+  styledFontmd2: {
+    fontFamily: 'GmarketSansMedium',
+    fontSize: '4vh',
+    padding: '0',
+    margin: '3.2vh 0 4vh 0',
   },
 }));
 
@@ -20,7 +30,6 @@ function Weather({ currentWeather }) {
   const [T1H, setT1H] = useState('');
   const [REH, setREH] = useState('');
   const [WSD, setWSD] = useState('');
-  const wx = '맑음';
 
   useEffect(() => {
     setT1H(currentWeather.T1H);
@@ -31,17 +40,17 @@ function Weather({ currentWeather }) {
   return (
     <div>
       <T1HWrapper>
-        <Chip label="기온 및 날씨" />
-        <p className={classes.styledFontmd}>{T1H}℃</p>
-        <p className={classes.styledFontmd}>맑음</p>
+        <StyledDiv>기온 및 날씨</StyledDiv>
+        <p className={classes.styledFontmd1}>{T1H}℃</p>
+        <p className={classes.styledFontsm}>맑음</p>
       </T1HWrapper>
       <REHWrapper>
-        <Chip label="습도" />
-        <p className={classes.styledFontmd}>{REH}%</p>
+        <StyledDiv>습도</StyledDiv>
+        <p className={classes.styledFontmd2}>{REH}%</p>
       </REHWrapper>
       <WSDWrapper>
-        <Chip label="풍속" />
-        <p className={classes.styledFontmd}>{WSD}km/h</p>
+        <StyledDiv>풍속</StyledDiv>
+        <p className={classes.styledFontmd2}>{WSD}km/h</p>
       </WSDWrapper>
     </div>
   );
@@ -62,4 +71,17 @@ const REHWrapper = styled.div`
 const WSDWrapper = styled.div`
   width: 250px;
   text-align: center;
+`;
+
+const StyledDiv = styled.div`
+  width: 16vh;
+  height: flex;
+  background-color: #efefef;
+  border-radius: 20px;
+  box-shadow: 0px 0px 16px #f4f4f4;
+  font-family: 'GmarketSansMedium';
+  font-size: 16pt;
+  color: #606060;
+  margin: 2vh auto;
+  padding: 0.8vh 2vh;
 `;
