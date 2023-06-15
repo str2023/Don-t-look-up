@@ -70,6 +70,6 @@ function Shoes({ attire }) {
 export default Shoes;
 
 const SlideWrapper = styled.div`
-  margin: 0 0 200px 0;
+  padding: 0 0 40px 0;
   width: 520px;
 `;

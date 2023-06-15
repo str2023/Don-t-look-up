@@ -57,12 +57,12 @@ function Outer({ attire }) {
         <Slider {...settings}>
           {outer1 && (
             <div>
-              <img src={images[outer1]} alt={outer1} style={{ width: '360px' }} />
+              <img src={images[outer1]} alt={outer1} style={{ width: '560px' }} />
             </div>
           )}
           {outer2 && (
             <div>
-              <img src={images[outer2]} alt={outer2} style={{ width: '360px' }} />
+              <img src={images[outer2]} alt={outer2} style={{ width: '560px' }} />
             </div>
           )}
         </Slider>
@@ -74,5 +74,6 @@ function Outer({ attire }) {
 export default Outer;
 
 const SlideWrapper = styled.div`
-  width: 360px;
+  width: 560px;
+  padding: 0 0 40px 0;
 `;
