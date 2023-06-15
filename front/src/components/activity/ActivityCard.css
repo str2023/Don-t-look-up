@@ -1,0 +1,40 @@
+.activityIn {
+  z-index: 9999;
+  position: fixed;
+  display: block;
+  top: 20%;
+  right: 5%;
+  animation: fadeInUp 1s;
+}
+
+.activityOut {
+  z-index: 9999;
+  position: fixed;
+  display: block;
+  top: 20%;
+  right: 5%;
+  animation: fadeOutDown 1s;
+  animation-fill-mode: forwards;
+  animation-delay: 1s;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+
+@keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+}
