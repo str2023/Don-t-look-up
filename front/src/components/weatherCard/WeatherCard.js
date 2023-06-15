@@ -52,7 +52,10 @@ export default function WeatherCard({ area }) {
       {isWeather ? (
         <>
           <CardActionArea onClick={handleWeatherClick}>
-            <CardHeader avatar={<Avatar alt="날씨" src={`${process.env.PUBLIC_URL}/${icon}.png`} uriencoding="utf-8" />} title={area} />
+            <CardHeader
+              avatar={<Avatar alt="날씨" src={`${process.env.PUBLIC_URL}/${icon}.png`} uriencoding="utf-8" variant="square" />}
+              title={area}
+            />
             <CardContent>
               <Grid container>
                 <Grid item p={2}>
