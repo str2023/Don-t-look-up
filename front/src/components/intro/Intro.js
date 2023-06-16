@@ -133,7 +133,7 @@ return (
             transform: 'translateX(-50%)'
           }}
         >
-          기후에 따른 옷차림 추천
+          기후에 따른 라이프 스타일
         </Typography>
         <Typography
           sx={{ 
