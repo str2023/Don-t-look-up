@@ -6,9 +6,8 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import { makeStyles } from '@material-ui/core';
-import logoWhite from '../../assets/Logo_white.png';
 import DNLPlogWhite from '../../assets/로고-edited-2.png';
-import DNLPlogoBlue from '../../assets/로고-edited-2.png';
+import DNLPlogoBlue from '../../assets/로고-edited-1.png';
 import { UserContext } from '../../contexts/context';
 import PostSearchDrawer from '../postSearch/PostSearch';
 import CurrentPostButton from '../postSearch/CurrentPostButton';
@@ -32,6 +31,16 @@ const Header = () => {
   };
 
   const handleMenuClose = () => {
+    setMenuAnchorEl(null);
+  };
+
+  const handleMain = () => {
+    navigate('/main');
+    setMenuAnchorEl(null);
+  };
+
+  const handleFavorit = () => {
+    navigate('/favorite');
     setMenuAnchorEl(null);
   };
 
@@ -64,18 +73,22 @@ const Header = () => {
             <MenuIcon style={{ margin: '0 2.4vh 0 1.2vh' }} />
           </IconButton>
           <Link to="/" style={{ padding: '10px 0 0 0' }}>
-            <img src={DNLPlogWhite} alt="logo white" style={{ height: '4em' }} />
+            <img
+              src={`${parseInt(new Date().getHours(), 10) >= 7 && parseInt(new Date().getHours(), 10) <= 19 ? DNLPlogWhite : DNLPlogoBlue}`}
+              alt="logo white"
+              style={{ height: '4em' }}
+            />
           </Link>
         </div>
         <Menu anchorEl={menuAnchorEl} open={Boolean(menuAnchorEl)} onClose={handleMenuClose} keepMounted>
           {/* Add your menu items here */}
-          <MenuItem id="menuItem" onClick={() => navigate('/main')} style={{ fontFamily: 'GmarketSansMedium' }}>
+          <MenuItem id="menuItem" onClick={handleMain} style={{ fontFamily: 'GmarketSansMedium' }}>
             메인페이지
           </MenuItem>
-          <MenuItem id="menuItem" onClick={() => navigate('/user')} style={{ fontFamily: 'GmarketSansMedium' }}>
+          {/* <MenuItem id="menuItem" onClick={() => navigate('/user')} style={{ fontFamily: 'GmarketSansMedium' }}>
             마이페이지
-          </MenuItem>
-          <MenuItem id="menuItem" onClick={() => navigate('/favorite')} style={{ fontFamily: 'GmarketSansMedium' }}>
+          </MenuItem> */}
+          <MenuItem id="menuItem" onClick={handleFavorit} style={{ fontFamily: 'GmarketSansMedium' }}>
             즐겨찾기
           </MenuItem>
         </Menu>
