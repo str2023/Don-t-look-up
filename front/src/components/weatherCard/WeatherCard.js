@@ -34,9 +34,10 @@ export default function WeatherCard({ area }) {
       console.log(err);
     }
     const wthrInfoLine = data.weather.wthrInfo.replace(/\n/g, ' ');
+    const wthrInfoEnter = data.weather.wthrInfo.replace(/\n/g, '<br/>');
     setIcon(data.icon);
     setWeather(() => {
-      const newWeather = { ...data.weather, wthrInfoLine, ...data.outfit };
+      const newWeather = { ...data.weather, wthrInfoLine, ...data.outfit, wthrInfo: wthrInfoEnter };
       return newWeather;
     });
   }, [area]);
@@ -53,7 +54,7 @@ export default function WeatherCard({ area }) {
         <>
           <CardActionArea onClick={handleWeatherClick}>
             <CardHeader
-              avatar={<Avatar alt="날씨" src={`${process.env.PUBLIC_URL}/${icon}.png`} uriencoding="utf-8" />}
+              avatar={<Avatar alt="날씨" src={`${process.env.PUBLIC_URL}/${icon}.png`} uriencoding="utf-8" variant="square" />}
               title={area}
               style={{ fontFamily: 'GmarketSansMedium', fontSize: '2vh', lineHeight: '160%' }}
             />
@@ -88,19 +89,14 @@ export default function WeatherCard({ area }) {
           <Divider variant="middle" />
           <CardActionArea>
             <CardActions disableSpacing className="flow-text">
-              <Typography
-                className="flow-wrap"
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                style={{ fontFamily: 'GmarketSansMedium', lineHeight: '160%', color: '#89d1eb' }}
-              >
+              <Typography className="flow-wrap" onClick={handleExpandClick} aria-expanded={expanded}>
                 {weather.wthrInfoLine}
               </Typography>
             </CardActions>
           </CardActionArea>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent className="text" p={2}>
-              <pre>{weather.wthrInfo}</pre>
+              <p dangerouslySetInnerHTML={{ __html: weather.wthrInfo }} />
             </CardContent>
           </Collapse>
         </>
