@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
-import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded';
 import { keyframes } from 'styled-components';
 
-import * as Api from '../../lib/apis/api';
 import { UserContext } from '../../contexts/context';
 import Outfit from '../outfit/Outfits';
 import Weather from '../weather/Weather';
@@ -117,7 +114,6 @@ function Main() {
       console.log(err);
     }
     setIcon(data.icon);
-    console.log(data.item);
     setWeather(() => {
       const newWeather = { ...data.weather, ...data.uvIndex, ...data.outfit };
       return newWeather;

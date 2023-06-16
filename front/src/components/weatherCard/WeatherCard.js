@@ -94,7 +94,7 @@ export default function WeatherCard({ area }) {
               </Typography>
             </CardActions>
           </CardActionArea>
-          <Collapse in={expanded} timeout="auto" unmountOnExit className="text">
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent p={2}>
               <p dangerouslySetInnerHTML={{ __html: weather.wthrInfo }} />
             </CardContent>

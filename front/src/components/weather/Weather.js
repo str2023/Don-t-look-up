@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Chip } from '@mui/material';
 import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core';
 
@@ -74,7 +73,7 @@ const WSDWrapper = styled.div`
 `;
 
 const StyledDiv = styled.div`
-  width: 16vh;
+  width: 10rem;
   height: flex;
   background-color: #efefef;
   border-radius: 20px;
