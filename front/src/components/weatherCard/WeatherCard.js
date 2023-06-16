@@ -49,7 +49,7 @@ export default function WeatherCard({ area }) {
   const isWeather = Object.keys(weather).length > 0;
 
   return (
-    <Card sx={{ maxWidth: 400 }}>
+    <Card sx={{ maxWidth: 400, backgroundColor: 'rgba(255,255,255,0.5)' }}>
       {isWeather ? (
         <>
           <CardActionArea onClick={handleWeatherClick}>
