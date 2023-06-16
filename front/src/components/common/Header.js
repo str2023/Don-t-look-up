@@ -5,14 +5,24 @@ import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
+import { makeStyles } from '@material-ui/core';
 import logoWhite from '../../assets/Logo_white.png';
+import DNLPlogWhite from '../../assets/로고-edited-2.png';
+import DNLPlogoBlue from '../../assets/로고-edited-2.png';
 import { UserContext } from '../../contexts/context';
 import PostSearchDrawer from '../postSearch/PostSearch';
 import CurrentPostButton from '../postSearch/CurrentPostButton';
 
 import './Header.css';
 
+const useStyles = makeStyles((theme) => ({
+  styledAppBar: {
+    backgroundColor: `${parseInt(new Date().getHours(), 10) >= 7 && parseInt(new Date().getHours(), 10) <= 19 ? '#89d1eb' : '#20273f'}`,
+  },
+}));
+
 const Header = () => {
+  const classes = useStyles();
   const navigate = useNavigate();
   const { userState, dispatch, setArea } = useContext(UserContext);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -44,25 +54,28 @@ const Header = () => {
   };
 
   return (
-    <AppBar id="bar" position="static" sx={{ backgroundColor: '#42bff5' }}>
+    <AppBar
+      id="bar"
+      style={{ backgroundColor: `${parseInt(new Date().getHours(), 10) > 7 && parseInt(new Date().getHours(), 10) < 19 ? '#42bff5' : '#15182d'}` }}
+    >
       <Toolbar>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuClick}>
-            <MenuIcon />
+            <MenuIcon style={{ margin: '0 2.4vh 0 1.2vh' }} />
           </IconButton>
-          <Link to="/">
-            <img src={logoWhite} alt="logo white" style={{ height: '4em' }} />
+          <Link to="/" style={{ padding: '10px 0 0 0' }}>
+            <img src={DNLPlogWhite} alt="logo white" style={{ height: '4em' }} />
           </Link>
         </div>
         <Menu anchorEl={menuAnchorEl} open={Boolean(menuAnchorEl)} onClose={handleMenuClose} keepMounted>
           {/* Add your menu items here */}
-          <MenuItem id="menuItem" onClick={() => navigate('/main')}>
+          <MenuItem id="menuItem" onClick={() => navigate('/main')} style={{ fontFamily: 'GmarketSansMedium' }}>
             메인페이지
           </MenuItem>
-          <MenuItem id="menuItem" onClick={() => navigate('/user')}>
+          <MenuItem id="menuItem" onClick={() => navigate('/user')} style={{ fontFamily: 'GmarketSansMedium' }}>
             마이페이지
           </MenuItem>
-          <MenuItem id="menuItem" onClick={() => navigate('/favorite')}>
+          <MenuItem id="menuItem" onClick={() => navigate('/favorite')} style={{ fontFamily: 'GmarketSansMedium' }}>
             즐겨찾기
           </MenuItem>
         </Menu>
@@ -70,17 +83,17 @@ const Header = () => {
         <CurrentPostButton />
         <PostSearchDrawer />
         {!userState.isLoggedIn && (
-          <Button color="inherit" onClick={handleLogin}>
+          <Button color="inherit" onClick={handleLogin} style={{ fontFamily: 'GmarketSansMedium', fontSize: '1.6vh' }}>
             로그인
           </Button>
         )}
         {userState.isLoggedIn && (
-          <Button color="inherit" onClick={handleLogout}>
+          <Button color="inherit" onClick={handleLogout} style={{ fontFamily: 'GmarketSansMedium', fontSize: '1.6vh' }}>
             로그아웃
           </Button>
         )}
         {!userState.isLoggedIn && (
-          <Button color="inherit" onClick={handleRegister}>
+          <Button color="inherit" onClick={handleRegister} style={{ fontFamily: 'GmarketSansMedium', fontSize: '1.6vh' }}>
             회원가입
           </Button>
         )}

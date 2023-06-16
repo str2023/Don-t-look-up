@@ -1,16 +1,18 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Container, Grid, TextField, Button } from '@mui/material';
+import { useSnackbar } from 'notistack';
 
 import * as Api from '../../lib/apis/api';
 
-import logoPurple from '../../assets/Logo_purple.png';
+import logoBlue from '../../assets/로고-edited-1.png';
 import { UserContext } from '../../contexts/context';
 
 function LoginForm() {
   const { userState, dispatch } = useContext(UserContext);
   const { isLoggedIn } = userState;
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -60,6 +62,7 @@ function LoginForm() {
       navigate('/main', { replace: true });
     } catch (err) {
       console.log('로그인에 실패하였습니다.\n', err);
+      enqueueSnackbar(`${err.response.data}`, { variant: 'error' });
     }
   };
 
@@ -73,13 +76,13 @@ function LoginForm() {
         <Grid item xs={12} sm={8} md={6} lg={4}>
           <Box display="flex" justifyContent="center">
             <Link to="/">
-              <img src={logoPurple} alt="logo purple" />
+              <img src={logoBlue} alt="logo purple" style={{ width: '360px', margin: '4vh auto' }} />
             </Link>
           </Box>
           <form onSubmit={handleSubmit}>
             <TextField
               id="loginEmail"
-              label="이메일 주소"
+              label={<span style={{ fontFamily: 'GmarketSansMedium' }}>이메일 주소</span>}
               type="email"
               autoComplete="on"
               fullWidth
@@ -92,7 +95,7 @@ function LoginForm() {
             />
             <TextField
               id="loginPassword"
-              label="비밀번호"
+              label={<span style={{ fontFamily: 'GmarketSansMedium' }}>비밀번호</span>}
               type="password"
               autoComplete="on"
               fullWidth
@@ -104,12 +107,22 @@ function LoginForm() {
               variant="outlined"
             />
             <Grid container justifyContent="center" mt={3}>
-              <Button variant="contained" color="primary" type="submit" disabled={!isFormValid}>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                disabled={!isFormValid}
+                style={{ fontFamily: 'GmarketSansMedium', fontSize: '12pt', borderRadius: '20px', width: '12vh', backgroundColor: '#42bff5' }}
+              >
                 로그인
               </Button>
             </Grid>
             <Grid container justifyContent="center" mt={3}>
-              <Button variant="outlined" onClick={() => navigate('/register')}>
+              <Button
+                variant="outlined"
+                onClick={() => navigate('/register')}
+                style={{ fontFamily: 'GmarketSansMedium', fontSize: '12pt', borderRadius: '20px', width: '12vh' }}
+              >
                 회원가입
               </Button>
             </Grid>

@@ -7,6 +7,7 @@ import 코트이미지 from '../../assets/outfitImage/outer/코트.png';
 import 점퍼이미지 from '../../assets/outfitImage/outer/점퍼.png';
 import 자켓이미지 from '../../assets/outfitImage/outer/자켓.png';
 import 가디건이미지 from '../../assets/outfitImage/outer/가디건.png';
+import 아우터없음이미지 from '../../assets/outfitImage/outer/noOuter.png';
 
 function Outer({ attire }) {
   const [outer1, setOuter1] = useState(null);
@@ -19,6 +20,7 @@ function Outer({ attire }) {
       점퍼: 점퍼이미지,
       자켓: 자켓이미지,
       가디건: 가디건이미지,
+      아우터없음: 아우터없음이미지,
     }),
     [],
   );
@@ -37,6 +39,7 @@ function Outer({ attire }) {
         }
       });
     }
+    setOuter1('아우터없음');
   }, [attire.outer, images]);
 
   const settings = {

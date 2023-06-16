@@ -45,10 +45,10 @@ function PostSearchDrawer() {
 
   return (
     <div>
-      <Button onClick={toggleDrawer(true)} color="inherit">
+      <Button onClick={toggleDrawer(true)} color="inherit" style={{ fontFamily: 'GmarketSansMedium', fontSize: '1.6vh' }}>
         {area}
       </Button>
-      <Drawer anchor="top" open={search} onClose={toggleDrawer(false)}>
+      <Drawer anchor="top" open={search} onClose={toggleDrawer(false)} style={{ fontFamily: 'GmarketSansMedium', fontSize: '1.6vh' }}>
         <div>
           <DaumPostcode onComplete={Complete} />
         </div>

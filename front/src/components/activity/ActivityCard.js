@@ -69,39 +69,41 @@ const ActivityCard = (props) => {
 
   useEffect(() => {
     getActivity();
-    setTimeout(() => {
-      setThumbUp(true);
-    }, 5000);
+    // setTimeout(() => {
+    //   setThumbUp(true);
+    // }, 5000);
   }, [getActivity]);
 
   return (
-    <Card sx={{ display: 'inline-block', paddingInline: 3, paddingBlock: 1 }} className={thumbUp || thumbDown ? 'activityOut' : 'activityIn'}>
-      <CardHeader
-        avatar={<Avatar alt="활동" src={`${process.env.PUBLIC_URL}/${wx}.png`} uriencoding="utf-8" variant="square" />}
-        title={activity[0] ? `${area}의 이웃들은 지금 ${activity[0]} 중이에요!` : `${area}의 이웃들은 지금 무엇을 하고 있을까요?`}
-      />
-      {/* <CardMedia component="img" height="194" image="/static/images/cards/paella.jpg" alt="Paella dish" /> */}
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            {comment()}
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="thumbUp" onClick={handleThumbUp}>
-            {thumbUp ? <ThumbUpAltIcon /> : <ThumbUpOffAltIcon />}
-          </IconButton>
-          <IconButton aria-label="thumbDown" onClick={handleThumbDown}>
-            {thumbDown ? <ThumbDownAltIcon /> : <ThumbDownOffAltIcon />}
-          </IconButton>
-        </CardActions>
-      </Box>
-    </Card>
+    tryActivity.length > 0 && (
+      <Card sx={{ display: 'inline-block', paddingInline: 3, paddingBlock: 1 }} className={thumbUp || thumbDown ? 'activityOut' : 'activityIn'}>
+        <CardHeader
+          avatar={<Avatar alt="활동" src={`${process.env.PUBLIC_URL}/${wx}.png`} uriencoding="utf-8" variant="square" />}
+          title={activity[0] ? `${area}의 이웃들은 지금 ${activity[0]} 중이에요!` : `${area}의 이웃들은 지금 무엇을 하고 있을까요?`}
+        />
+        {/* <CardMedia component="img" height="194" image="/static/images/cards/paella.jpg" alt="Paella dish" /> */}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <CardContent>
+            <Typography variant="body2" color="text.secondary">
+              {comment()}
+            </Typography>
+          </CardContent>
+          <CardActions disableSpacing>
+            <IconButton aria-label="thumbUp" onClick={handleThumbUp}>
+              {thumbUp ? <ThumbUpAltIcon /> : <ThumbUpOffAltIcon />}
+            </IconButton>
+            <IconButton aria-label="thumbDown" onClick={handleThumbDown}>
+              {thumbDown ? <ThumbDownAltIcon /> : <ThumbDownOffAltIcon />}
+            </IconButton>
+          </CardActions>
+        </Box>
+      </Card>
+    )
   );
 };
 

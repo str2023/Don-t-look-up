@@ -31,7 +31,7 @@ const CurrentPostButton = () => {
   };
 
   return (
-    <Button color="inherit" onClick={getCurrentPost}>
+    <Button color="inherit" onClick={getCurrentPost} style={{ fontFamily: 'GmarketSansMedium', fontSize: '1.6vh' }}>
       현위치로 설정
     </Button>
   );

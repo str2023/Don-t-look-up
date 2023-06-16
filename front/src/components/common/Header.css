@@ -1,5 +1,7 @@
 :root {
-  .bar {
-    background-color: 42bff5;
+  #bar {
+    position: static;
+    justify-content: center;
+    text-align: center;
   }
 }
