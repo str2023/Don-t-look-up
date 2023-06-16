@@ -16,7 +16,7 @@ function Items({ item }) {
   const [item2, setItem2] = useState(null);
 
   const images = {
-    '자외선 크림': 자외선크림이미지,
+    선크림: 자외선크림이미지,
     우산: 우산이미지,
     양산: 양산이미지,
     장화: 장화이미지,
@@ -25,6 +25,7 @@ function Items({ item }) {
   };
 
   useEffect(() => {
+    console.log(item);
     item.forEach((element, index) => {
       if (index === 0) {
         if (images[element]) {

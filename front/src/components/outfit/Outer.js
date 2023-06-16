@@ -38,8 +38,9 @@ function Outer({ attire }) {
           }
         }
       });
+    } else {
+      setOuter1('아우터없음');
     }
-    setOuter1('아우터없음');
   }, [attire.outer, images]);
 
   const settings = {

@@ -80,7 +80,7 @@ export default function WeatherCard({ area }) {
                     <br />
                     신발: {weather.outfit?.clothes?.[0]?.shoes[0]}
                     <br />
-                    준비물: {weather.outfit?.item?.[0]?.top[0]}
+                    준비물: {weather.outfit.items?.[0]?.item[0]}
                   </Typography>
                 </Grid>
               </Grid>
@@ -94,8 +94,8 @@ export default function WeatherCard({ area }) {
               </Typography>
             </CardActions>
           </CardActionArea>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent className="text" p={2}>
+          <Collapse in={expanded} timeout="auto" unmountOnExit className="text">
+            <CardContent p={2}>
               <p dangerouslySetInnerHTML={{ __html: weather.wthrInfo }} />
             </CardContent>
           </Collapse>

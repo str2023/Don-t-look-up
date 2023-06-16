@@ -49,11 +49,7 @@ function Outfit({ weather, icon }) {
         Api.get('/outfit', { wx: icon })
           .then((data) => {
             try {
-              if (data && data.items.item && data.items.item[0] > 0) {
-                setItem(data.items.item);
-              } else {
-                console.error('Unexpected API');
-              }
+              setItem(data.items[0].item);
             } catch (e) {
               console.error('There was an error!', e);
             }

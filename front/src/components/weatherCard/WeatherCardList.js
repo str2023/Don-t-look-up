@@ -4,15 +4,28 @@ import { Box, Grid, Typography } from '@mui/material';
 import { useLongPress } from 'use-long-press'; // 롱클릭시 이벤트 라이브러리
 import { useSnackbar } from 'notistack';
 import styled from 'styled-components';
+import { makeStyles } from '@material-ui/core';
 import WeatherCard from './WeatherCard';
 import * as Api from '../../lib/apis/api';
 import { UserContext } from '../../contexts/context';
+import 밤하늘 from '../../assets/night.png';
+import 낮하늘 from '../../assets/sky.png';
+
+const useStyles = makeStyles(() => ({
+  favoriteBackground: {
+    backgroundImage: `url(${parseInt(new Date().getHours(), 10) > 7 && parseInt(new Date().getHours(), 10) < 19 ? 낮하늘 : 밤하늘})`,
+    backgroundSize: 'cover',
+    height: '100vh',
+    padding: 20,
+  },
+}));
 
 const WeatherCardList = (props) => {
   const [areaKey, setAreaKey] = useState('');
   const { area } = useContext(UserContext);
   const { favorite, setChange, change } = props;
   const { enqueueSnackbar } = useSnackbar();
+  const classes = useStyles();
 
   const callback = useCallback(async () => {
     if (window.confirm('해당 주소를 즐겨찾기에서 제외하시겠습니까?')) {
@@ -46,8 +59,8 @@ const WeatherCardList = (props) => {
   };
 
   return (
-    <Box justifyContent="center">
-      <Typography className="modelTitle" variant="h3" align="center" b={3} mx={3} my={6} style={{ fontFamily: 'GmarketSansMedium' }}>
+    <Box justifyContent="center" className={classes.favoriteBackground}>
+      <Typography className="modelTitle" color="#ffeb76" variant="h3" align="center" style={{ fontFamily: 'GmarketSansMedium' }}>
         즐겨찾기
       </Typography>
       {Object.keys(favorite).length === 0 && (
