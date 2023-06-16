@@ -12,14 +12,16 @@ function Outer({ attire }) {
   const [outer1, setOuter1] = useState(null);
   const [outer2, setOuter2] = useState(null);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const images = {
-    패딩: 패딩이미지,
-    코트: 코트이미지,
-    점퍼: 점퍼이미지,
-    자켓: 자켓이미지,
-    가디건: 가디건이미지,
-  };
+  const images = React.useMemo(
+    () => ({
+      패딩: 패딩이미지,
+      코트: 코트이미지,
+      점퍼: 점퍼이미지,
+      자켓: 자켓이미지,
+      가디건: 가디건이미지,
+    }),
+    [],
+  );
 
   useEffect(() => {
     if (attire.outer) {
@@ -54,15 +56,16 @@ function Outer({ attire }) {
   return (
     <div>
       <SlideWrapper>
+        <StyledDiv>OUTER</StyledDiv>
         <Slider {...settings}>
           {outer1 && (
             <div>
-              <img src={images[outer1]} alt={outer1} style={{ width: '360px' }} />
+              <img src={images[outer1]} alt={outer1} style={{ width: '560px' }} />
             </div>
           )}
           {outer2 && (
             <div>
-              <img src={images[outer2]} alt={outer2} style={{ width: '360px' }} />
+              <img src={images[outer2]} alt={outer2} style={{ width: '560px' }} />
             </div>
           )}
         </Slider>
@@ -74,5 +77,20 @@ function Outer({ attire }) {
 export default Outer;
 
 const SlideWrapper = styled.div`
-  width: 360px;
+  width: 560px;
+  padding: 0 0 40px 0;
+  margin: 0 0 3.2vh 0;
+`;
+
+const StyledDiv = styled.div`
+  width: 12vh;
+  height: flex;
+  background-color: #efefef;
+  border-radius: 20px;
+  box-shadow: 0px 0px 16px #f4f4f4;
+  font-family: 'GmarketSansMedium';
+  font-size: 16pt;
+  color: #606060;
+  margin: 2vh auto;
+  padding: 0.8vh 2vh;
 `;

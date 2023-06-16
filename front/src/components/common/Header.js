@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { AppBar, Toolbar, Button, Typography } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { useNavigate, Link } from 'react-router-dom';
+import { AppBar, Toolbar, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
@@ -10,6 +9,8 @@ import logoWhite from '../../assets/Logo_white.png';
 import { UserContext } from '../../contexts/context';
 import PostSearchDrawer from '../postSearch/PostSearch';
 import CurrentPostButton from '../postSearch/CurrentPostButton';
+
+import './Header.css';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#42bff5', width: '100%' }}>
+    <AppBar id="bar" position="static" sx={{ backgroundColor: '#42bff5' }}>
       <Toolbar>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuClick}>
@@ -55,9 +56,15 @@ const Header = () => {
         </div>
         <Menu anchorEl={menuAnchorEl} open={Boolean(menuAnchorEl)} onClose={handleMenuClose} keepMounted>
           {/* Add your menu items here */}
-          <MenuItem onClick={() => navigate('/main')}>메인페이지</MenuItem>
-          <MenuItem onClick={() => navigate('/user')}>마이페이지</MenuItem>
-          <MenuItem onClick={() => navigate('/favorite')}>즐겨찾기</MenuItem>
+          <MenuItem id="menuItem" onClick={() => navigate('/main')}>
+            메인페이지
+          </MenuItem>
+          <MenuItem id="menuItem" onClick={() => navigate('/user')}>
+            마이페이지
+          </MenuItem>
+          <MenuItem id="menuItem" onClick={() => navigate('/favorite')}>
+            즐겨찾기
+          </MenuItem>
         </Menu>
         <div style={{ flex: 1 }} /> {/* This empty div pushes the rest of the content to the right side */}
         <CurrentPostButton />

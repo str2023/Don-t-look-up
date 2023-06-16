@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Box, Container, Grid, TextField, Button, Typography } from '@mui/material';
+import { Box, Container, Grid, TextField, Button } from '@mui/material';
 
 import * as Api from '../../lib/apis/api';
 
@@ -63,9 +63,9 @@ function LoginForm() {
     }
   };
 
-  const kakaoKey = process.env.CLIENT_ID;
-  const redirectLoginUrl = process.env.REDIRECT_LOGIN_URI;
-  const KAKAO_AUTH_LOGIN_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${redirectLoginUrl}&response_type=code`;
+  // const kakaoKey = process.env.CLIENT_ID;
+  // const redirectLoginUrl = process.env.REDIRECT_LOGIN_URI;
+  // const KAKAO_AUTH_LOGIN_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${redirectLoginUrl}&response_type=code`;
 
   return (
     <Container>
@@ -85,8 +85,8 @@ function LoginForm() {
               fullWidth
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              error={!isEmailValid}
-              helperText={!isEmailValid ? '이메일 형식이 올바르지 않습니다.' : ''}
+              error={!isEmailValid && email !== ''}
+              helperText={!isEmailValid && email !== '' ? '이메일 형식이 올바르지 않습니다.' : ''}
               margin="normal"
               variant="outlined"
             />
@@ -98,8 +98,8 @@ function LoginForm() {
               fullWidth
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              error={!isPasswordValid}
-              helperText={!isPasswordValid ? '비밀번호는 6글자 이상입니다.' : ''}
+              error={!isPasswordValid && password !== ''}
+              helperText={!isPasswordValid && password !== '' ? '비밀번호는 6글자 이상입니다.' : ''}
               margin="normal"
               variant="outlined"
             />
@@ -114,13 +114,13 @@ function LoginForm() {
               </Button>
             </Grid>
           </form>
-          <Grid item>
+          {/* <Grid item>
             <div>
               <a id="custom-login-btn" href={KAKAO_AUTH_LOGIN_URI}>
                 <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" alt="카카오 계정으로 로그인하기 버튼" width="222" />
               </a>
             </div>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Grid>
     </Container>

@@ -203,13 +203,13 @@ function RegisterForm() {
                   로그인하기
                 </Button>
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <div>
                   <a id="custom-login-btn" onClick={registerWithKakao}>
                     <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" alt="카카오 계정으로 로그인하기 버튼" width="222" />
                   </a>
                 </div>
-              </Grid>
+              </Grid> */}
             </Grid>
           </form>
         </Grid>
