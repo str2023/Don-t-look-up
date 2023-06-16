@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignContent: 'center',
     textAlign: 'center',
-    backgroundImage: `url(${parseInt(new Date().getHours(), 10) >= 7 && parseInt(new Date().getHours(), 10) <= 19 ? 낮하늘 : 밤하늘})`,
+    backgroundImage: `url(${parseInt(new Date().getHours(), 10) > 7 && parseInt(new Date().getHours(), 10) < 19 ? 낮하늘 : 밤하늘})`,
     backgroundSize: 'cover',
     position: 'relative',
   },
@@ -43,13 +43,14 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'rgba(255,255,255,0.5)',
     borderRadius: '10px',
     padding: '3.2vh 6vh 3.2vh 6vh',
+    margin: '6vh auto 0 auto',
   },
   sentence1: {
     width: '76vh',
     height: '12vh',
     borderRadius: '20px',
-    backgroundColor: `${parseInt(new Date().getHours(), 10) >= 7 && parseInt(new Date().getHours(), 10) <= 19 ? '#89d1eb' : '#20273f'}`,
-    color: `${parseInt(new Date().getHours(), 10) >= 7 && parseInt(new Date().getHours(), 10) <= 19 ? '#20273f' : '#efefef'}`,
+    backgroundColor: `${parseInt(new Date().getHours(), 10) > 7 && parseInt(new Date().getHours(), 10) < 19 ? '#42bff5' : '#20273f'}`,
+    color: `${parseInt(new Date().getHours(), 10) > 7 && parseInt(new Date().getHours(), 10) < 19 ? '#20273f' : '#efefef'}`,
     margin: '4.8vh auto',
     fontSize: '3.2vh',
     display: 'grid',
@@ -60,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'GmarketSansMedium',
     fontSize: '2.6vh',
     margin: '0 0 4vh 0',
-    color: '#ffffff',
+    color: `${parseInt(new Date().getHours(), 10) > 7 && parseInt(new Date().getHours(), 10) < 19 ? '#20273f' : '#efefef'}`,
   },
   styledFont2: {
     fontFamily: 'GmarketSansMedium',
@@ -72,13 +73,14 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '3.2vh',
     fontWeight: '600',
     margin: '2vh 0 0 0',
+    color: `${parseInt(new Date().getHours(), 10) > 7 && parseInt(new Date().getHours(), 10) < 19 ? '#20273f' : '#efefef'}`,
   },
   styledFont4: {
     fontFamily: 'GmarketSansMedium',
     fontSize: '2.4vh',
     fontWeight: '100',
-    color: '#efefef',
-    opacity: '64%',
+    color: `${parseInt(new Date().getHours(), 10) > 7 && parseInt(new Date().getHours(), 10) < 19 ? '#20273f' : '#efefef'}`,
+    opacity: '80%',
     margin: '0 0 3.2vh 0',
   },
   detailContainer: {
@@ -103,16 +105,8 @@ const useStyles = makeStyles((theme) => ({
 function Main() {
   const [icon, setIcon] = useState('');
   const [weather, setWeather] = useState('');
-  const navigate = useNavigate();
-  const { isLoggedIn } = useContext(UserContext).userState;
   const classes = useStyles();
   const { area } = useContext(UserContext);
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/login');
-    }
-  }, [isLoggedIn, navigate]);
 
   const getWeather = useCallback(async () => {
     let data;

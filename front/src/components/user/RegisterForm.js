@@ -6,6 +6,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Container, Grid, TextField, Button, Typography } from '@mui/material';
 import { FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@material-ui/core';
+import { useSnackbar } from 'notistack';
+import logoBlue from '../../assets/로고-edited-1.png';
 
 import * as Api from '../../lib/apis/api';
 
@@ -15,6 +17,7 @@ import { UserContext } from '../../contexts/context';
 function RegisterForm() {
   const { userState, dispatch } = useContext(UserContext);
   const { isLoggedIn } = userState;
+  const { enqueueSnackbar } = useSnackbar();
 
   const navigate = useNavigate();
 
@@ -87,6 +90,7 @@ function RegisterForm() {
         gender,
       }).catch((err) => {
         console.log(err);
+        enqueueSnackbar(`${err.response.data}`, { variant: 'error' });
         throw new Error(err.response.data);
       });
 
@@ -123,17 +127,22 @@ function RegisterForm() {
     <Container sx={{ marginTop: 5 }}>
       <Grid container justifyContent="center">
         <Grid item xs={12} sm={8} md={6}>
-          <Typography variant="h5" align="center" mb={3} sx={{ fontFamily: 'GmarketSans' }}>
+          <Box display="flex" justifyContent="center">
+            <Link to="/">
+              <img src={logoBlue} alt="logo purple" style={{ width: '360px', margin: '4vh auto' }} />
+            </Link>
+          </Box>
+          <Typography variant="h5" align="center" mb={3} style={{ fontFamily: 'GmarketSansMedium' }}>
             회원가입
           </Typography>
           <form onSubmit={handleSubmit}>
             <TextField
               id="registerEmail"
-              label={<span style={{ fontFamily: 'GmarketSans' }}>이메일 주소</span>}
+              label={<span style={{ fontFamily: 'GmarketSansMedium' }}>이메일 주소</span>}
               type="email"
               fullWidth
               margin="normal"
-              sx={{ fontFamily: 'GmarketSans' }}
+              sx={{ fontFamily: 'GmarketSansMedium' }}
               autoComplete="off"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -144,7 +153,7 @@ function RegisterForm() {
             <TextField
               id="registerPassword"
               sx={{ fontFamily: 'GmarketSans' }}
-              label={<span style={{ fontFamily: 'GmarketSans' }}>비밀번호</span>}
+              label={<span style={{ fontFamily: 'GmarketSansMedium' }}>비밀번호</span>}
               type="password"
               fullWidth
               margin="normal"
@@ -157,7 +166,7 @@ function RegisterForm() {
 
             <TextField
               id="registerNickname"
-              label={<span style={{ fontFamily: 'GmarketSans' }}>닉네임</span>}
+              label={<span style={{ fontFamily: 'GmarketSansMedium' }}>닉네임</span>}
               type="text"
               fullWidth
               margin="normal"
@@ -170,7 +179,7 @@ function RegisterForm() {
 
             <TextField
               id="registerBirthDate"
-              label={<span style={{ fontFamily: 'GmarketSans' }}>생년월일</span>}
+              label={<span style={{ fontFamily: 'GmarketSansMedium' }}>생년월일</span>}
               type="date"
               fullWidth
               margin="normal"
@@ -184,22 +193,40 @@ function RegisterForm() {
             />
 
             <FormControl fullWidth margin="normal" error={!isGenderValid && gender !== ''}>
-              <InputLabel id="registerGender">Gender</InputLabel>
+              <InputLabel id="registerGender" style={{ fontFamily: 'GmarketSansMedium' }}>
+                Gender
+              </InputLabel>
               <Select labelId="registerGender" id="gender" value={gender} onChange={(e) => setGender(e.target.value)}>
-                <MenuItem value="male">남성</MenuItem>
-                <MenuItem value="female">여성</MenuItem>
+                <MenuItem value="male" style={{ fontFamily: 'GmarketSansMedium' }}>
+                  남성
+                </MenuItem>
+                <MenuItem value="female" style={{ fontFamily: 'GmarketSansMedium' }}>
+                  여성
+                </MenuItem>
               </Select>
-              {!isGenderValid && gender !== '' && <FormHelperText>성별을 선택해주세요.</FormHelperText>}
+              {!isGenderValid && gender !== '' && <FormHelperText style={{ fontFamily: 'GmarketSansMedium' }}>성별을 선택해주세요.</FormHelperText>}
             </FormControl>
 
             <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ mt: 3 }}>
               <Grid item>
-                <Button variant="contained" color="success" type="submit" sx={{ fontFamily: 'GmarketSans' }} disabled={!isFormValid}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  type="submit"
+                  sx={{ fontFamily: 'GmarketSansMedium' }}
+                  disabled={!isFormValid}
+                  style={{ fontFamily: 'GmarketSansMedium', fontSize: '12pt', borderRadius: '20px', width: '12vh', backgroundColor: '#397ad8' }}
+                >
                   회원가입
                 </Button>
               </Grid>
               <Grid item>
-                <Button variant="contained" sx={{ fontFamily: 'GmarketSans' }} color="success" onClick={() => navigate('/login')}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={() => navigate('/login')}
+                  style={{ fontFamily: 'GmarketSansMedium', fontSize: '12pt', borderRadius: '20px', width: '12vh', backgroundColor: '#42bff5' }}
+                >
                   로그인하기
                 </Button>
               </Grid>

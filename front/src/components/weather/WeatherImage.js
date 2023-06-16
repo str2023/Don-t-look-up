@@ -42,20 +42,20 @@ const WeatherImage = ({ icon }) => {
   }, [icon]);
 
   if (weatherImg === '맑음') {
-    if (hours >= 7 && hours <= 18) {
+    if (hours > 7 && hours <= 18) {
       setWeatherImg('낮맑음');
     } else {
       setWeatherImg('밤맑음');
     }
   } else if (weatherImg === '구름') {
-    if (hours >= 7 && hours <= 18) {
+    if (hours > 7 && hours <= 18) {
       setWeatherImg('낮구름');
     } else {
       setWeatherImg('밤구름');
     }
   }
 
-  return <img src={images[weatherImg]} alt={weatherImg} style={{ width: '760px', margin: '0 0 4.4vh 0' }} />;
+  return <img src={images[weatherImg]} alt={weatherImg} style={{ width: '760px', margin: '0 auto' }} />;
 };
 
 export default WeatherImage;
