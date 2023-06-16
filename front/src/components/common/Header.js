@@ -44,7 +44,7 @@ const Header = () => {
   };
 
   return (
-    <AppBar id="bar" position="static" sx={{ backgroundColor: '#42bff5' }}>
+    <AppBar className="bar" position="static">
       <Toolbar>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuClick}>

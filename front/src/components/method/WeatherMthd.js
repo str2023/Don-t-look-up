@@ -79,7 +79,7 @@ const MethodWrapper = styled.div`
 `;
 
 const StyledDiv = styled.div`
-  width: 12vh;
+  width: 12rem;
   height: flex;
   background-color: #efefef;
   border-radius: 20px;
