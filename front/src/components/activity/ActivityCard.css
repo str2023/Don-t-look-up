@@ -2,8 +2,8 @@
   z-index: 9999;
   position: fixed;
   display: block;
-  top: 20%;
-  right: 5%;
+  top: 100px;
+  right: 25px;
   animation: fadeInUp 1s;
 }
 
@@ -11,8 +11,8 @@
   z-index: 9999;
   position: fixed;
   display: block;
-  top: 20%;
-  right: 5%;
+  top: 100px;
+  right: 25px;
   animation: fadeOutDown 1s;
   animation-fill-mode: forwards;
   animation-delay: 1s;

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useCallback, useContext, useState } from 'react';
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import { useLongPress } from 'use-long-press'; // 롱클릭시 이벤트 라이브러리
 import { useSnackbar } from 'notistack';
 import styled from 'styled-components';
@@ -28,7 +28,7 @@ const WeatherCardList = (props) => {
 
   const onDeleteFavorite = useLongPress(callback, {
     onStart: (e) => setAreaKey(e.currentTarget.getAttribute('data-key')),
-    threshold: 700,
+    threshold: 1000,
   });
 
   const handleAddFavorite = async () => {
