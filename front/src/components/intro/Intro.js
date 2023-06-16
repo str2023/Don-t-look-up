@@ -1,42 +1,51 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine } from 'recharts';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, Typography } from '@mui/material';
 import axios from 'axios';
 import Lottie from 'lottie-react';
-import animationData from '../../Banner.json';
+import animationData from '../../assets/lottie/weatherAnimation.json';
+import tempData from '../../assets/data/koreaTemp.json';
+import carbonData from '../../assets/data/carbonEmission.json';
+import downArrow from "../../assets/lottie/down_arrow.json";
+
 
 function Intro() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [carbonEmissionData, setCarbonEmissionData] = useState([]);
+  const [tempChangeData, setTempChangeData] = useState([]);
   const graphsContainerRef = useRef(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get(`${process.env.PUBLIC_URL}/carbonEmission.json`);
+    try {
+      const years = Object.keys(carbonData['Non-OECD']).filter(year => year >= '2005' && year <= '2021');
 
-      const reshapedData = Object.entries(result.data)
-        .reduce((acc, [key, values]) => {
-          Object.entries(values).forEach(([year, emission]) => {
-            const existingYearObject = acc.find((obj) => obj.year === year);
-            if (existingYearObject) {
-              existingYearObject[key] = emission;
-            } else {
-              acc.push({
-                year,
-                [key]: emission,
-              });
-            }
-          });
-          return acc;
-        }, [])
-        .sort((a, b) => a.year - b.year); // 년도를 오름차순으로 정렬
+    const reshapedCarbonEmissionData = years.map(year => ({
+      year,
+      'Non-OECD': carbonData['Non-OECD'][year],
+      'OECD': carbonData.OECD[year],
+      'World': carbonData.World[year],
+    }));
 
-      setData(reshapedData);
-    };
+    setCarbonEmissionData(reshapedCarbonEmissionData);
 
-    fetchData();
+
+
+      const reshapedTempChangeData = tempData
+        .filter((item) => item['년'] >= '1982' && item['년'] <= '2022')
+        .map((item) => ({
+          year: item['년'],
+          temp: item['평균기온(℃)'],
+        }));
+      setTempChangeData(reshapedTempChangeData);
+    } catch (error) {
+      console.error('Data 처리 오류:', error);
+      setCarbonEmissionData([]);
+      setTempChangeData([]);
+    }
   }, []);
+
 
   const handleButtonClick = () => {
     const loggedIn = sessionStorage.getItem('userToken');
@@ -61,8 +70,6 @@ function Intro() {
     }
   };
 
-
-
 return (
   <Box
     sx={{
@@ -78,7 +85,7 @@ return (
   >
     <Box
         sx={{
-          width: '100%',
+          width: '90%',
           height: '94vh',
           position: 'relative',
         }}
@@ -146,15 +153,44 @@ return (
       >
         시작하기
       </Button>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleScrollToGraphs}
-        sx={{ position: 'absolute', bottom: '2em' }}
-
+      <Box
+        sx={{ 
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          position: 'absolute', 
+          bottom: '2em', 
+          width: '100%',
+        }}
       >
-        더 알아보기
-      </Button>
+        <Box
+          onClick={handleScrollToGraphs}
+          sx={{ 
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <Button
+            variant="text"
+            color="primary"
+            sx={{ fontSize: '1.2em', fontWeight: '800', fontFamily: 'GmarketSansMedium'  }}
+          >
+            더 알아보기
+          </Button>
+          <Lottie 
+            animationData={downArrow}
+            options={{
+              loop: true,
+              autoplay: true,
+            }}
+            height={10}
+            width={10}
+            isStopped={false}
+            isPaused={false}
+            style={{ width: '20%', height: '20%' }}
+          />
+        </Box>
+      </Box>
     </Box>
     </Box>
     <Box
@@ -170,68 +206,121 @@ return (
         position: 'relative',
       }}
     >
-      <Button
-            variant="contained"
+      <Box
+        sx={{ 
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          position: 'absolute', 
+          top: '2em', 
+          width: '100%',
+        }}
+      >
+        <Box
+          onClick={handleScrollToTop}
+          sx={{ 
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <Button
+            variant="text"
             color="primary"
-            onClick={handleScrollToTop}
-            sx={{ position: 'absolute', top: '1em' }}
+            sx={{ fontSize: '1.2em', fontWeight: '800', fontFamily: 'GmarketSansMedium'  }}
           >
             위로
-        </Button>
+          </Button>
+          <Lottie 
+            animationData={downArrow}
+            options={{
+              loop: true,
+              autoplay: true,
+            }}
+            height={10}
+            width={10}
+            isStopped={false}
+            isPaused={false}
+            style={{ width: '20%', height: '20%', transform: 'rotate(180deg)' }}
+          />
+        </Box>
+      </Box>
       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
         <Box sx={{ width: '40%' }}>
-          
-          <Typography
-            sx={{ fontSize: '2em', textAlign: 'center', fontFamily: 'GmarketSansMedium' }}
-          >
+          <Typography sx={{ fontSize: '2em', textAlign: 'center', fontFamily: 'GmarketSansMedium' }}>
             전세계 온실가스 배출량 차트
           </Typography>
-          <LineChart
-            width={800}
-            height={600}
-            data={data}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-            sx={{ marginTop: '2em' }}
-          >
+          <LineChart width={800} height={400} data={carbonEmissionData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} sx={{ marginTop: '2em' }}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="year" />
-            <YAxis />
+            <XAxis dataKey="year" label={{ value: '년도', position: 'insideBottomLeft', offset: -10, style: {fontSize: '1.2rem'} }} />
+            <YAxis label={{ value: '온실가스 배출량 (T)', angle: -90, position: 'insideLeft', offset: -10, style: {fontSize: '1.2rem'} }} />
             <Tooltip />
             <Legend />
             <Line type="monotone" dataKey="Non-OECD" stroke="#8884d8" activeDot={{ r: 8 }} />
-            <Line type="monotone" dataKey="OECD" stroke="#82ca9d" />
-            <Line type="monotone" dataKey="World" stroke="#ff7300" />
+            <Line type="monotone" dataKey="OECD" stroke="#82ca9d" activeDot={{ r: 8 }} />
+            <Line type="monotone" dataKey="World" stroke="#ffc658" activeDot={{ r: 8 }} />
           </LineChart>
-        </Box>
-
-        <Box
-          sx={{
-            width: '40%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Typography
+          </Box>
+          <Box
             sx={{
-              fontSize: '1.5em',
-              textAlign: 'center',
-              fontFamily: 'GmarketSansMedium',
+              width: '40%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            계속 증가하는 온실가스 배출량 때문에 세계에서는 지구 온난화로 인한 기후변화를 겪고 있습니다
+            <Typography
+              sx={{
+                fontSize: '2em',
+                textAlign: 'center',
+                fontFamily: 'GmarketSansMedium',
+              }}
+            >
+              계속 증가하는 온실가스 배출량 때문에<br /> 
+              세계에서는 지구 온난화로 인한 기후변화를 겪고 있습니다.<br /> 
+              지난 40년간 대한민국의 연평균 기온이 상승하면서<br /> 
+              대한민국의 기후는 예전과 많이 달라졌습니다<br /> 
+              
+            </Typography>
+          </Box>
+        </Box>
+        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ width: '40%' }}>
+          <Typography sx={{ fontSize: '2em', textAlign: 'center', fontFamily: 'GmarketSansMedium' }}>
+            대한민국 기온 변화
           </Typography>
+          <LineChart width={800} height={320} data={tempChangeData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="year" label={{ value: '년도', position: 'insideBottomLeft', offset: -10, style: {fontSize: '1.2rem'}  }} />
+            <YAxis domain={[10, 16]} label={{ value: '평균 기온 (°C)', angle: -90, position: 'insideLeft', style: {fontSize: '1.2rem'} }} />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="temp" stroke="#8884d8" activeDot={{ r: 8 }} />
+          </LineChart>
+        </Box>
+        <Box
+            sx={{
+              width: '40%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: '1.5em',
+                textAlign: 'center',
+                fontFamily: 'GmarketSansMedium',
+              }}
+            >
+              .
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </Box>
-  </Box>
-);
+  );
 
 }
 
