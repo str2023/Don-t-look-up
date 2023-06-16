@@ -58,7 +58,7 @@ const WeatherMthd = ({ area }) => {
             <p className={classes.description2}>평년과 같은 날씨를 유지합니다.</p>
             <p className={classes.description2}>바깥에서 활동하기 좋아요!</p>
             <img
-              src={parseInt(new Date().getHours(), 10) >= 7 && parseInt(new Date().getHours(), 10) <= 19 ? 낮평년기온 : 밤평년기온}
+              src={parseInt(new Date().getHours(), 10) > 7 && parseInt(new Date().getHours(), 10) < 19 ? 낮평년기온 : 밤평년기온}
               alt="행동방침 이미지"
             />
           </>
