@@ -55,14 +55,9 @@ function Intro() {
 
 
   const handleButtonClick = () => {
-    const loggedIn = sessionStorage.getItem('userToken');
-    // 클릭시 로그인 했을때 바로 메인페이지로 이동
-    if (loggedIn) {
+
       navigate('/main');
-      // 아닐시 로그인페이지로 이동
-    } else {
-      navigate('/login');
-    }
+
   };
 
   const handleScrollToTop = () => {
