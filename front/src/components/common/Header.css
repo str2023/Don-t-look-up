@@ -1,5 +1,6 @@
 :root {
   .bar {
-    background-color: 42bff5;
+    position: static;
+    background-color: #42bff5;
   }
 }
