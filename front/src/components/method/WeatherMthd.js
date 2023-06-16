@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core';
 import * as Api from '../../lib/apis/api';
@@ -26,27 +26,27 @@ const WeatherMthd = ({ area }) => {
   const [method1, setMethod1] = useState(null);
   const [method2, setMethod2] = useState(null);
 
-  useEffect(() => {
-    const getMethod = () => {
-      if (area != null) {
-        Api.get('/weatherMthd', { area }).then((data) => {
-          try {
-            if (typeof data === 'string') {
-              setMethod('평년 기온');
-            } else if (typeof data === 'object') {
-              setMethod(data);
-              setMethod1(method['0']);
-              setMethod2(method['1']);
-            }
-          } catch (err) {
-            console.error('there was an error!', err);
+  const getMethod = useCallback(() => {
+    if (area != null) {
+      Api.get('/weatherMthd', { area }).then((data) => {
+        try {
+          if (typeof data === 'string') {
+            setMethod('평년 기온');
+          } else if (typeof data === 'object') {
+            setMethod(data);
+            setMethod1(data['0']);
+            setMethod2(data['1']);
           }
-        });
-      }
-    };
+        } catch (err) {
+          console.error('there was an error!', err);
+        }
+      });
+    }
+  }, [area]);
 
+  useEffect(() => {
     getMethod();
-  }, [area, method]);
+  }, [getMethod]);
 
   return (
     <div>
