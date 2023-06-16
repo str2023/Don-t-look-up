@@ -18,6 +18,9 @@
 .flow-wrap {
   animation: textLoop 60s linear infinite;
   padding-right: 1.4881vw;
+  font-family: 'GmarketSansMedium';
+  line-height: '160%';
+  color: #89d1eb;
 }
 
 @keyframes textLoop {
@@ -29,8 +32,4 @@
     -webkit-transform: translate3d(-100%, 0, 0);
     transform: translate3d(-100%, 0, 0);
   }
-}
-
-.text {
-  overflow-x: scroll;
 }
