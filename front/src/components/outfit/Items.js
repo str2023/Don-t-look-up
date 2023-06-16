@@ -25,7 +25,6 @@ function Items({ item }) {
   };
 
   useEffect(() => {
-    console.log(item);
     item.forEach((element, index) => {
       if (index === 0) {
         if (images[element]) {
