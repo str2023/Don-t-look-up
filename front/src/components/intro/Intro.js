@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine } from 'recharts';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import axios from 'axios';
 import Lottie from 'lottie-react';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
@@ -16,6 +16,12 @@ function Intro() {
   const [carbonEmissionData, setCarbonEmissionData] = useState([]);
   const [tempChangeData, setTempChangeData] = useState([]);
   const graphsContainerRef = useRef(null);
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+
+  const chartWidth = viewportWidth * 0.3; 
+  const chartHeight = viewportHeight * 0.3; 
+
 
   useEffect(() => {
     try {
@@ -45,14 +51,9 @@ function Intro() {
   }, []);
 
   const handleButtonClick = () => {
-    const loggedIn = sessionStorage.getItem('userToken');
-    // 클릭시 로그인 했을때 바로 메인페이지로 이동
-    if (loggedIn) {
+
       navigate('/main');
-      // 아닐시 로그인페이지로 이동
-    } else {
-      navigate('/login');
-    }
+
   };
 
   const handleScrollToTop = () => {
@@ -283,9 +284,12 @@ function Intro() {
           >
             <Typography
               sx={{
-                fontSize: '2em',
-                textAlign: 'center',
-                fontFamily: 'GmarketSansMedium',
+                width: '40%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                margin: '2em',
               }}
             >
               계속 증가하는 온실가스 배출량 때문에 세계에서는
@@ -295,6 +299,14 @@ function Intro() {
               이런 변화 속에서 매일 어떤 옷을 입을지
               <br /> 결정하는 것은 어려운 일입니다.
             </Typography>
+            <LineChart width={chartWidth} height={chartHeight} data={tempChangeData} margin={{ top: 5, right: 20, left: 20, bottom: 5 }} sx= {{ marginTop: '2em' }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="year" label={{ value: '년도', position: 'insideBottomLeft', offset: -10, style: {fontSize: '1.2rem'}  }} />
+              <YAxis domain={[10, 16]} label={{ value: '평균 기온 (°C)', angle: -90, position: 'insideLeft', style: {fontSize: '1.2rem'} }} />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="temp" stroke="#8884d8" activeDot={{ r: 8 }} />
+            </LineChart>
           </Box>
         </Box>
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
@@ -320,9 +332,12 @@ function Intro() {
           >
             <Typography
               sx={{
-                fontSize: '2em',
-                textAlign: 'center',
-                fontFamily: 'GmarketSansMedium',
+                width: '40%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                margin: '2em',
               }}
             >
               저희 돈룩업은 실시간 기상 정보를 바탕으로 <br />
@@ -350,7 +365,6 @@ function Intro() {
               시작하기
             </Button>
           </Box>
-        </Box>
       </Box>
     </Box>
   );
