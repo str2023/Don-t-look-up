@@ -89,7 +89,7 @@ const ActivityCard = (props) => {
           }}
         >
           <CardContent>
-            <Typography variant="h6">{comment()}</Typography>
+            <Typography variant="h6">{!thumbDown ? comment() : '고마워요!'}</Typography>
           </CardContent>
           <CardActions disableSpacing>
             <IconButton aria-label="thumbUp" onClick={handleThumbUp}>
